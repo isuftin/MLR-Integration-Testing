@@ -1,0 +1,31 @@
+sudo: required
+
+env:
+  matrix:
+    TEST_SETUP='docker-compose.yml'
+  global:
+  - DOCKER_COMPOSE_VERSION=1.22.0
+
+services:
+  - docker
+
+before_install:
+  - sudo apt-get update
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+  - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
+  - openssl genrsa -out .travis/wildcard.key 2048
+  - openssl req -nodes -newkey rsa:2048 -keyout  .travis/wildcard.key -out  .travis/wildcard.csr -subj "/C=US/ST=Wisconsin/L=Middleon/O=US Geological Survey/OU=WMA/CN=*"
+  - openssl x509 -req -days 9999 -in .travis/wildcard.csr -signkey .travis/wildcard.key  -out .travis/wildcard.crt
+  - docker run -d -p 8443:443 -p 8080:80 -v ${PWD}/.travis/nginx.conf:/etc/nginx/nginx.conf -v ${PWD}/.travis/wildcard.crt:/etc/nginx/wildcard.crt -v ${PWD}/.travis/wildcard.key:/etc/nginx/wildcard.key nginx:latest && sleep 5
+  - docker pull localhost:8443/wma/wma-spring-boot-base:latest
+  - docker tag localhost:8443/wma/wma-spring-boot-base:latest cidasdpdasartip.cr.usgs.gov:8447/wma/wma-spring-boot-base:latest
+  - docker pull localhost:8443/mlr-python-base-docker:latest
+  - docker tag localhost:8443/mlr-python-base-docker:latest cidasdpdasartip.cr.usgs.gov:8447/mlr-python-base-docker:latest
+
+install:
+  - docker-compose -f $TEST_SETUP build
+
+script:
+  - echo "Done"
