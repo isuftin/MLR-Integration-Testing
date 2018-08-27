@@ -2,7 +2,7 @@ sudo: required
 
 env:
   matrix:
-    TEST_SETUP='docker-compose.yml'
+  - TEST_SETUP='docker-compose.yml'
   global:
   - DOCKER_COMPOSE_VERSION=1.22.0
 
