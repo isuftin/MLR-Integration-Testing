@@ -1,0 +1,218 @@
+---
+  version: '3.5'
+
+  networks:
+    mlr-it-net:
+
+  services:
+    mlr-legacy-db:
+      image: cidasdpdasartip.cr.usgs.gov:8447/mlr/mlr-legacy-db:latest
+      container_name: mlr-legacy-db
+      env_file:
+        - configuration/config/common/config.env
+        - configuration/secrets/common/secrets.env
+        - configuration/config/mlr-legacy-db/config.env
+        - configuration/secrets/mlr-legacy-db/secrets.env
+      networks:
+        mlr-it-net:
+          aliases:
+            - mlr.legacy.db
+      ports:
+        - "5432:5432"
+
+    water-auth-server:
+      image: cidasdpdasartip.cr.usgs.gov:8447/water_auth_server:latest
+      container_name: water-auth-server
+      env_file:
+        - configuration/config/common/config.env
+        - configuration/secrets/common/secrets.env
+        - configuration/config/water-auth-server/config.env
+        - configuration/secrets/water-auth-server/secrets.env
+      volumes:
+        - "./configuration/config/certificates/water-auth-server/tomcat-ssl/ssl.crt:/home/spring/ssl.crt"
+        - "./configuration/config/certificates/water-auth-server/tomcat-ssl/ssl.key:/home/spring/ssl.key"
+        - "./configuration/config/certificates/water-auth-server/oauth2/oauth-wildcard-dev.crt:/home/spring/oauth-wildcard-sign.crt"
+        - "./configuration/config/certificates/water-auth-server/oauth2/oauth-wildcard-dev.key:/home/spring/oauth-wildcard-sign.key"
+        - "./configuration/config/certificates/water-auth-server/saml/saml-wildcard-dev.crt:/home/spring/saml-wildcard-sign.crt"
+        - "./configuration/config/certificates/water-auth-server/saml/saml-wildcard-dev.key:/home/spring/saml-wildcard-sign.key"
+      networks:
+        mlr-it-net:
+          aliases:
+            - water.auth.server
+      ports:
+        - "8443:8443"
+
+    mlr-legacy:
+      image: cidasdpdasartip.cr.usgs.gov:8447/mlr/mlr-legacy:latest
+      container_name: mlr-legacy
+      env_file:
+        - configuration/config/common/config.env
+        - configuration/secrets/common/secrets.env
+        - configuration/config/mlr-legacy/config.env
+        - configuration/secrets/mlr-legacy/secrets.env
+      command: "./wait-for.sh water.auth.server:8443 -t 60 -- ./wait-for.sh mlr.legacy.db:5432 -t 60 -- ./entrypoint.sh"
+      volumes:
+        - "./configuration/config/certificates/mlr-legacy/ssl.crt:/home/spring/ssl.crt"
+        - "./configuration/config/certificates/mlr-legacy/ssl.key:/home/spring/ssl.key"
+        - "./configuration/config/certificates/wildcard.crt:/certificates/wildcard-ssl.crt"
+        - "./configuration/config/certificates/water-auth-server/tomcat-ssl/ssl.crt:/certificates/tomcat-ssl.crt"
+      networks:
+        mlr-it-net:
+          aliases:
+            - mlr.legacy
+      ports:
+        - "6010:6010"
+      depends_on:
+        - water-auth-server
+        - mlr-legacy-db
+
+    mlr-notification:
+      image: cidasdpdasartip.cr.usgs.gov:8447/mlr/mlr-notification:latest
+      container_name: mlr-notification
+      env_file:
+        - configuration/config/common/config.env
+        - configuration/secrets/common/secrets.env
+        - configuration/config/mlr-notification/config.env
+        - configuration/secrets/mlr-notification/secrets.env
+      command: "./wait-for.sh water.auth.server:8443 -t 60 -- ./entrypoint.sh"
+      volumes:
+        - "./configuration/config/certificates/mlr-notification/ssl.crt:/home/spring/ssl.crt"
+        - "./configuration/config/certificates/mlr-notification/ssl.key:/home/spring/ssl.key"
+        - "./configuration/config/certificates/wildcard.crt:/certificates/wildcard-ssl.crt"
+        - "./configuration/config/certificates/water-auth-server/tomcat-ssl/ssl.crt:/certificates/tomcat-ssl.crt"
+      networks:
+        mlr-it-net:
+          aliases:
+            - mlr.notification
+      ports:
+        - "6025:6025"
+      depends_on:
+        - water-auth-server
+
+    mlr-legacy-transformer:
+      image: cidasdpdasartip.cr.usgs.gov:8447/mlr/mlr-legacy-transformer:latest
+      container_name: mlr-legacy-transformer
+      env_file:
+        - configuration/config/common/config.env
+        - configuration/secrets/common/secrets.env
+        - configuration/config/mlr-legacy-transformer/config.env
+        - configuration/secrets/mlr-legacy-transformer/secrets.env
+      command: "./wait-for.sh water.auth.server:8443 -t 60 -- ./entrypoint.sh"
+      volumes:
+        - "./configuration/config/certificates/mlr-legacy-transformer/ssl.crt:/home/python/certificates/ssl.crt"
+        - "./configuration/config/certificates/mlr-legacy-transformer/ssl.key:/home/python/certificates/ssl.key"
+        - "./configuration/config/certificates/wildcard.crt:/home/python/certificates/wildcard-ssl.crt"
+        - "./configuration/config/certificates/water-auth-server/tomcat-ssl/ssl.crt:/home/python/certificates/tomcat-ssl.crt"
+      networks:
+        mlr-it-net:
+          aliases:
+            - mlr.legacy.transformer
+      ports:
+        - "6020:6020"
+      depends_on:
+        - water-auth-server
+
+    mlr-wsc-file-exporter:
+      image: cidasdpdasartip.cr.usgs.gov:8447/mlr/mlr-wsc-file-exporter:latest
+      container_name: mlr-wsc-file-exporter
+      env_file:
+        - configuration/config/common/config.env
+        - configuration/secrets/common/secrets.env
+        - configuration/config/mlr-wsc-file-exporter/config.env
+        - configuration/secrets/mlr-wsc-file-exporter/secrets.env
+      command: "./wait-for.sh water.auth.server:8443 -t 60 -- ./entrypoint.sh"
+      volumes:
+        - "./configuration/config/certificates/mlr-wsc-file-exporter/ssl.crt:/home/python/certificates/ssl.crt"
+        - "./configuration/config/certificates/mlr-wsc-file-exporter/ssl.key:/home/python/certificates/ssl.key"
+        - "./configuration/config/certificates/wildcard.crt:/home/python/certificates/wildcard-ssl.crt"
+        - "./configuration/config/certificates/water-auth-server/tomcat-ssl/ssl.crt:/home/python/certificates/tomcat-ssl.crt"
+      networks:
+        mlr-it-net:
+          aliases:
+            - mlr.wsc.file.exporter
+      ports:
+        - "6024:6024"
+      depends_on:
+        - water-auth-server
+
+    mlr-validator:
+      image: cidasdpdasartip.cr.usgs.gov:8447/mlr/mlr-validator:latest
+      container_name: mlr-validator
+      env_file:
+        - configuration/config/common/config.env
+        - configuration/secrets/common/secrets.env
+        - configuration/config/mlr-validator/config.env
+        - configuration/secrets/mlr-validator/secrets.env
+      command: "./wait-for.sh water.auth.server:8443 -t 60 -- ./entrypoint.sh"
+      volumes:
+        - "./configuration/config/certificates/mlr-validator/ssl.crt:/home/python/certificates/ssl.crt"
+        - "./configuration/config/certificates/mlr-validator/ssl.key:/home/python/certificates/ssl.key"
+        - "./configuration/config/certificates/wildcard.crt:/home/python/certificates/wildcard-ssl.crt"
+        - "./configuration/config/certificates/water-auth-server/tomcat-ssl/ssl.crt:/home/python/certificates/tomcat-ssl.crt"
+      networks:
+        mlr-it-net:
+          aliases:
+            - mlr.validator
+      ports:
+        - "6027:6027"
+      depends_on:
+        - water-auth-server
+
+    mlr-ddot-ingester:
+      image: cidasdpdasartip.cr.usgs.gov:8447/mlr/mlr-ddot-ingester:latest
+      container_name: mlr-ddot-ingester
+      env_file:
+        - configuration/config/common/config.env
+        - configuration/secrets/common/secrets.env
+        - configuration/config/mlr-ddot-ingester/config.env
+        - configuration/secrets/mlr-ddot-ingester/secrets.env
+      command: "./wait-for.sh water.auth.server:8443 -t 60 -- ./entrypoint.sh"
+      volumes:
+        - "./configuration/config/certificates/mlr-ddot-ingester/testing-ssl.crt:/home/python/certificates/ssl.crt"
+        - "./configuration/config/certificates/mlr-ddot-ingester/testing-ssl.key:/home/python/certificates/ssl.key"
+        - "./configuration/config/certificates/wildcard.crt:/home/python/certificates/wildcard-ssl.crt"
+        - "./configuration/config/certificates/water-auth-server/tomcat-ssl/ssl.crt:/home/python/certificates/tomcat-ssl.crt"
+      networks:
+        mlr-it-net:
+          aliases:
+            - mlr.ddot.ingester
+      ports:
+        - "6028:6028"
+      depends_on:
+        - water-auth-server
+
+    mlr-gateway:
+      image: cidasdpdasartip.cr.usgs.gov:8447/mlr/mlr-gateway:latest
+      container_name: mlr-gateway
+      env_file:
+        - configuration/config/common/config.env
+        - configuration/secrets/common/secrets.env
+        - configuration/config/mlr-gateway/config.env
+        - configuration/secrets/mlr-gateway/secrets.env
+      command: "./wait-for.sh water.auth.server:8443 -t 60 -- ./wait-for.sh mlr.legacy.db:5432 -t 60 -- ./entrypoint.sh"
+      volumes:
+        - "./configuration/config/certificates/mlr-gateway/ssl.crt:/home/spring/ssl.crt"
+        - "./configuration/config/certificates/mlr-gateway/ssl.key:/home/spring/ssl.key"
+        - "./configuration/config/certificates/wildcard.crt:/certificates/wildcard-ssl.crt"
+        - "./configuration/config/certificates/mlr-legacy-transformer/ssl.crt:/certificates/mlr-legacy-transformer-ssl.crt"
+        - "./configuration/config/certificates/mlr-ddot-ingester/testing-ssl.crt:/certificates/mlr-ddot-ingester-ssl.crt"
+        - "./configuration/config/certificates/mlr-validator/ssl.crt:/certificates/mlr-validator-ssl.crt"
+        - "./configuration/config/certificates/mlr-legacy/ssl.crt:/certificates/mlr-legacy-ssl.crt"
+        - "./configuration/config/certificates/mlr-wsc-file-exporter/ssl.crt:/certificates/mlr-wsc-file-exporter-ssl.crt"
+        - "./configuration/config/certificates/mlr-notification/ssl.crt:/certificates/mlr-notification-ssl.crt"
+        - "./configuration/config/certificates/water-auth-server/tomcat-ssl/ssl.crt:/certificates/tomcat-ssl.crt"
+      networks:
+        mlr-it-net:
+          aliases:
+            - mlr.gateway
+      ports:
+        - "6026:6026"
+      depends_on:
+        - mlr-legacy-db
+        - water-auth-server
+        - mlr-legacy-transformer
+        - mlr-ddot-ingester
+        - mlr-validator
+        - mlr-legacy
+        - mlr-wsc-file-exporter
+        - mlr-notification
