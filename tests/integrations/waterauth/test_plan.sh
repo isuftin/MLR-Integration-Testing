@@ -1,9 +1,10 @@
 #!/bin/bash
 
 SERVICE_NAME="water-auth-server"
-OUTPUT_DIR="${OUTPUT_DIR:-`pwd`/tests/output/}"
-TESTS_DIR="${TESTS_DIR:-`pwd`/tests/integrations/}"
-DOCKER_NETWORK_NAME="${DOCKER_NETWORK_NAME:-mlr-integration-testing_mlr-it-net}"
+OUTPUT_DIR="${OUTPUT_DIR:-`pwd`/tests/output}"
+TESTS_DIR="${TESTS_DIR:-`pwd`/tests/integrations}"
+DOCKER_NETWORK_NAME="${DOCKER_NETWORK_NAME:-mlr-it-net}"
+
 {
   docker-compose -f docker-compose.yml up -d $SERVICE_NAME
 
@@ -21,8 +22,9 @@ DOCKER_NETWORK_NAME="${DOCKER_NETWORK_NAME:-mlr-integration-testing_mlr-it-net}"
     count=$((count + 1))
   done
 
-  docker run --rm --network="${DOCKER_NETWORK_NAME}" -v "${OUTPUT_DIR}:/tests/output/" -v "${TESTS_DIR}:/tests/integrations/" jmeter-base:latest jmeter -n -j /tests/output/waterauth/jmeter.log -l /tests/output/waterauth/jmeter-testing.log -t /tests/integrations/waterauth/waterauth.jmx
+  docker run --rm --network="${DOCKER_NETWORK_NAME}" -v "${OUTPUT_DIR}:/tests/output/" -v "${TESTS_DIR}:/tests/integrations/" jmeter-base:latest jmeter -f -n -j /tests/output/waterauth/jmeter-output/jmeter.log -l /tests/output/waterauth/jmeter-output/jmeter-testing.log -JJMETER_OUTPUT_PATH=/tests/output/waterauth/test-output/results.xml -t /tests/integrations/waterauth/waterauth.jmx
 } || {
   docker-compose -f docker-compose.yml down
+  exit 1
 }
 docker-compose -f docker-compose.yml down
