@@ -3,6 +3,7 @@
 SERVICE_NAME="water-auth-server"
 OUTPUT_DIR="${OUTPUT_DIR:-`pwd`/tests/output/}"
 TESTS_DIR="${TESTS_DIR:-`pwd`/tests/integrations/}"
+DOCKER_NETWORK_NAME="${DOCKER_NETWORK_NAME:-mlr-integration-testing_mlr-it-net}"
 {
   docker-compose -f docker-compose.yml up -d $SERVICE_NAME
 
@@ -20,7 +21,7 @@ TESTS_DIR="${TESTS_DIR:-`pwd`/tests/integrations/}"
     count=$((count + 1))
   done
 
-  docker run --rm --network="mlr-integration-testing_mlr-it-net" -v "${OUTPUT_DIR}:/tests/output/" -v "${TESTS_DIR}:/tests/integrations/" jmeter-base:latest jmeter -n -j /tests/output/waterauth/jmeter.log -l /tests/output/waterauth/jmeter-testing.log -t /tests/integrations/waterauth/waterauth.jmx
+  docker run --rm --network="${DOCKER_NETWORK_NAME}" -v "${OUTPUT_DIR}:/tests/output/" -v "${TESTS_DIR}:/tests/integrations/" jmeter-base:latest jmeter -n -j /tests/output/waterauth/jmeter.log -l /tests/output/waterauth/jmeter-testing.log -t /tests/integrations/waterauth/waterauth.jmx
 } || {
   docker-compose -f docker-compose.yml down
 }
