@@ -3,6 +3,7 @@
 
   networks:
     mlr-it-net:
+      name: mlr-it-net
 
   services:
     mlr-legacy-db:
