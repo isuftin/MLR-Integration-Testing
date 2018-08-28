@@ -20,8 +20,7 @@ before_install:
   - openssl x509 -req -days 9999 -in .travis/wildcard.csr -signkey .travis/wildcard.key  -out .travis/wildcard.crt
   - docker run -d -p 8444:443 -p 8080:80 -v ${PWD}/.travis/nginx.conf:/etc/nginx/nginx.conf -v ${PWD}/.travis/wildcard.crt:/etc/nginx/wildcard.crt -v ${PWD}/.travis/wildcard.key:/etc/nginx/wildcard.key nginx:latest && sleep 5
 install:
-  - chmod +x ./pull-containers.sh && ./pull-containers.sh
-  - docker-compose pull
+  - echo "done"
 
 script:
   - echo "Done"
