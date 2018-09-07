@@ -1,6 +1,7 @@
 FROM openjdk:8-jre-slim
 
 LABEL maintainer="isuftin@usgs.gov"
+LABEL description="This is a base container for JMeter Docker"
 
 ARG JMETER_VERSION=4.0
 
@@ -18,3 +19,9 @@ RUN wget https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-$JMETER_V
   mv apache-jmeter-$JMETER_VERSION /jmeter
 
 ENV PATH $JMETER_HOME/bin:$PATH
+
+COPY entrypoint.sh /
+
+RUN ["chmod", "+x", "/entrypoint.sh"]
+
+WORKDIR ${JMETER_HOME}

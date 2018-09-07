@@ -1,11 +1,78 @@
 ---
-  version: '3.5'
+  version: '3.6'
+
+  x-commons-depends:
+    &depends-on-waterauth
+    depends_on:
+      - water-auth-server
 
   networks:
     mlr-it-net:
       name: mlr-it-net
 
   services:
+    jmeter-server-1:
+      build:
+        context: ./jmeter-docker/base
+      image: jmeter-base:latest
+      ports:
+        - "50000"
+        - "1099"
+      networks:
+        mlr-it-net:
+          aliases:
+            - jmeter.server.1
+      command: jmeter -s -n
+      hostname: jmeter.server.1
+      volumes:
+        - "./tests/output:/tests/output"
+        - "./jmeter-docker/jmeter-server.properties:/jmeter/jmeter.properties"
+        - "./jmeter-docker/config/rmi_keystore.jks:/jmeter/rmi_keystore.jks"
+
+    jmeter-server-2:
+      build:
+        context: ./jmeter-docker/base
+      image: jmeter-base:latest
+      ports:
+        - "50000"
+        - "1099"
+      networks:
+        mlr-it-net:
+          aliases:
+            - jmeter.server.2
+      command: jmeter -s -n
+      hostname: jmeter.server.2
+      volumes:
+        - "./tests/output:/tests/output"
+        - "./jmeter-docker/jmeter-server.properties:/jmeter/jmeter.properties"
+        - "./jmeter-docker/config/rmi_keystore.jks:/jmeter/rmi_keystore.jks"
+
+    jmeter-server-3:
+      build:
+        context: ./jmeter-docker/base
+      image: jmeter-base:latest
+      ports:
+        - "50000"
+        - "1099"
+      networks:
+        mlr-it-net:
+          aliases:
+            - jmeter.server.3
+      command: jmeter -s -n
+      hostname: jmeter.server.3
+      volumes:
+        - "./tests/output:/tests/output"
+        - "./jmeter-docker/jmeter-server.properties:/jmeter/jmeter.properties"
+        - "./jmeter-docker/config/rmi_keystore.jks:/jmeter/rmi_keystore.jks"
+
+    smtp-server:
+      image: namshi/smtp:latest
+      networks:
+        mlr-it-net:
+          aliases:
+            - smtp.notification.server
+      hostname: smtp.notification.server
+
     mlr-legacy-db:
       image: cidasdpdasartip.cr.usgs.gov:8447/mlr/mlr-legacy-db:latest
       container_name: mlr-legacy-db
@@ -89,6 +156,7 @@
         - "6025:6025"
       depends_on:
         - water-auth-server
+        - smtp-server
 
     mlr-legacy-transformer:
       image: cidasdpdasartip.cr.usgs.gov:8447/mlr/mlr-legacy-transformer:latest
@@ -110,8 +178,7 @@
             - mlr.legacy.transformer
       ports:
         - "6020:6020"
-      depends_on:
-        - water-auth-server
+      << : *depends-on-waterauth
 
     mlr-wsc-file-exporter:
       image: cidasdpdasartip.cr.usgs.gov:8447/mlr/mlr-wsc-file-exporter:latest
@@ -133,8 +200,7 @@
             - mlr.wsc.file.exporter
       ports:
         - "6024:6024"
-      depends_on:
-        - water-auth-server
+      << : *depends-on-waterauth
 
     mlr-validator:
       image: cidasdpdasartip.cr.usgs.gov:8447/mlr/mlr-validator:latest
@@ -156,8 +222,7 @@
             - mlr.validator
       ports:
         - "6027:6027"
-      depends_on:
-        - water-auth-server
+      << : *depends-on-waterauth
 
     mlr-ddot-ingester:
       image: cidasdpdasartip.cr.usgs.gov:8447/mlr/mlr-ddot-ingester:latest
@@ -179,8 +244,7 @@
             - mlr.ddot.ingester
       ports:
         - "6028:6028"
-      depends_on:
-        - water-auth-server
+      << : *depends-on-waterauth
 
     mlr-gateway:
       image: cidasdpdasartip.cr.usgs.gov:8447/mlr/mlr-gateway:latest
