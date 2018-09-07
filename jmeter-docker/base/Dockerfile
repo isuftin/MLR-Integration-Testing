@@ -20,8 +20,6 @@ RUN wget https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-$JMETER_V
 
 ENV PATH $JMETER_HOME/bin:$PATH
 
-COPY entrypoint.sh /
-
 RUN ["chmod", "+x", "/entrypoint.sh"]
 
 WORKDIR ${JMETER_HOME}
