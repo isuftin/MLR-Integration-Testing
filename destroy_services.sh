@@ -2,7 +2,7 @@
 
 echo "Bringing down MLR services..."
 
-docker-compose -f docker-compose.yml down --volumes
+docker-compose -f docker-compose-services.yml down --volumes
 
 sleep 5
 
