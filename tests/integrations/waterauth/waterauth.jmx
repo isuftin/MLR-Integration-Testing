@@ -36,7 +36,7 @@
           </elementProp>
           <elementProp name="JMETER_OUTPUT_PATH" elementType="Argument">
             <stringProp name="Argument.name">JMETER_OUTPUT_PATH</stringProp>
-            <stringProp name="Argument.value">tests/output/waterauth/test-output/result.xml</stringProp>
+            <stringProp name="Argument.value">tests/output/waterauth/test-output</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -291,7 +291,7 @@
               <connectTime>true</connectTime>
             </value>
           </objProp>
-          <stringProp name="filename">${JMETER_OUTPUT_PATH}</stringProp>
+          <stringProp name="filename">${JMETER_OUTPUT_PATH}/view-results-tree.xml</stringProp>
         </ResultCollector>
         <hashTree/>
       </hashTree>

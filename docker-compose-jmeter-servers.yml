@@ -1,0 +1,70 @@
+---
+  version: '3.6'
+
+  x-commons-volumes:
+    &volumes
+    volumes:
+      - "./tests/output:/tests/output"
+      - "./jmeter-docker/jmeter-server.properties:/jmeter/jmeter.properties"
+      - "./jmeter-docker/config/rmi_keystore.jks:/jmeter/rmi_keystore.jks"
+
+  x-common-commands:
+    &command
+    command: jmeter -s -n
+
+  x-common-ports:
+    &ports
+    ports:
+      - "50000"
+      - "1099"
+
+  x-common-image:
+    &image
+    image: jmeter-base:latest
+
+  x-common-build:
+    &build
+    build:
+      context: ./jmeter-docker/base
+
+  networks:
+    mlr-it-net:
+      external: true
+      name: mlr-it-net
+
+  services:
+    jmeter-server-1:
+      << : *build
+      << : *image
+      << : *ports
+      << : *command
+      << : *volumes
+      networks:
+        mlr-it-net:
+          aliases:
+            - jmeter.server.1
+      hostname: jmeter.server.1
+
+    jmeter-server-2:
+      << : *build
+      << : *image
+      << : *ports
+      << : *command
+      << : *volumes
+      networks:
+        mlr-it-net:
+          aliases:
+            - jmeter.server.2
+      hostname: jmeter.server.2
+
+    jmeter-server-3:
+      << : *build
+      << : *image
+      << : *ports
+      << : *command
+      << : *volumes
+      networks:
+        mlr-it-net:
+          aliases:
+            - jmeter.server.3
+      hostname: jmeter.server.3

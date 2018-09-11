@@ -11,60 +11,6 @@
       name: mlr-it-net
 
   services:
-    jmeter-server-1:
-      build:
-        context: ./jmeter-docker/base
-      image: jmeter-base:latest
-      ports:
-        - "50000"
-        - "1099"
-      networks:
-        mlr-it-net:
-          aliases:
-            - jmeter.server.1
-      command: jmeter -s -n
-      hostname: jmeter.server.1
-      volumes:
-        - "./tests/output:/tests/output"
-        - "./jmeter-docker/jmeter-server.properties:/jmeter/jmeter.properties"
-        - "./jmeter-docker/config/rmi_keystore.jks:/jmeter/rmi_keystore.jks"
-
-    jmeter-server-2:
-      build:
-        context: ./jmeter-docker/base
-      image: jmeter-base:latest
-      ports:
-        - "50000"
-        - "1099"
-      networks:
-        mlr-it-net:
-          aliases:
-            - jmeter.server.2
-      command: jmeter -s -n
-      hostname: jmeter.server.2
-      volumes:
-        - "./tests/output:/tests/output"
-        - "./jmeter-docker/jmeter-server.properties:/jmeter/jmeter.properties"
-        - "./jmeter-docker/config/rmi_keystore.jks:/jmeter/rmi_keystore.jks"
-
-    jmeter-server-3:
-      build:
-        context: ./jmeter-docker/base
-      image: jmeter-base:latest
-      ports:
-        - "50000"
-        - "1099"
-      networks:
-        mlr-it-net:
-          aliases:
-            - jmeter.server.3
-      command: jmeter -s -n
-      hostname: jmeter.server.3
-      volumes:
-        - "./tests/output:/tests/output"
-        - "./jmeter-docker/jmeter-server.properties:/jmeter/jmeter.properties"
-        - "./jmeter-docker/config/rmi_keystore.jks:/jmeter/rmi_keystore.jks"
-
     smtp-server:
       image: namshi/smtp:latest
       networks:
