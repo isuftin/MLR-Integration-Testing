@@ -36,7 +36,7 @@ echo "Launching MLR services..."
   SERVICE_NAMES_ARRAY=( $SERVICE_NAMES )
   HEALTHY_SERVICES_ARRAY=( $HEALTHY_SERVICES )
   count=1
-  limit=120
+  limit=240
   until [[ ${#HEALTHY_SERVICES_ARRAY[@]} -eq ${#SERVICE_NAMES_ARRAY[@]} ]]; do
     echo "Testing service health. Attempt $count of $limit"
 
