@@ -15,11 +15,11 @@ get_healthy_services () {
 }
 
 launch_services () {
-  docker-compose -f docker-compose.yml up --no-color --detach --renew-anon-volumes
+  docker-compose -f docker-compose-services.yml up --no-color --detach --renew-anon-volumes
 }
 
 destroy_services () {
-  docker-compose -f docker-compose.yml down --volumes
+  docker-compose -f docker-compose-services.yml down --volumes
 }
 
 echo "Launching MLR services..."
