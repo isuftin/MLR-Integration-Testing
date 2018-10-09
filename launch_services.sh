@@ -41,8 +41,8 @@ echo "Launching MLR services..."
   fi
 
   HEALTHY_SERVICES=$(get_healthy_services)
-  SERVICE_NAMES_ARRAY=( "${SERVICE_NAMES}" )
-  HEALTHY_SERVICES_ARRAY=( "${HEALTHY_SERVICES}" )
+  read -r -a SERVICE_NAMES_ARRAY <<< $SERVICE_NAMES
+  read -r -a HEALTHY_SERVICES_ARRAY <<< $HEALTHY_SERVICES
   count=1
   limit=240
   until [[ ${#HEALTHY_SERVICES_ARRAY[@]} -eq ${#SERVICE_NAMES_ARRAY[@]} ]]; do
@@ -63,29 +63,19 @@ echo "Launching MLR services..."
     # Did we hit our testing limit? If so, bail.
     if [ $count -eq $limit ]; then
       echo "Docker containers coult not reach a healthy status in $limit tries"
-      echo "Services still not healthy: "
-      for UNHEALTHY_SERVICE in "${UNHEALTHY_SERVICES_ARRAY[@]}"; do
-        echo "${UNHEALTHY_SERVICE}"
-      done
+      echo "Services still not healthy: ${UNHEALTHY_SERVICES_ARRAY[*]}"
       destroy_services
       exit 1
     fi
 
     # Update the healthy services
     HEALTHY_SERVICES=$(get_healthy_services)
-    HEALTHY_SERVICES_ARRAY=( "$HEALTHY_SERVICES" )
-    echo "Not all services healthy yet."
-    echo "Services still not healthy: "
-    for UNHEALTHY_SERVICE in "${UNHEALTHY_SERVICES_ARRAY[@]}"; do
-      echo "${UNHEALTHY_SERVICE}"
-    done
+    read -r -a HEALTHY_SERVICES_ARRAY <<< $HEALTHY_SERVICES
+    echo "Services still not healthy: ${UNHEALTHY_SERVICES_ARRAY[*]}"
 
   done
 
-  echo "All services healthy:"
-  for HEALTHY_SERVICE in "${HEALTHY_SERVICES_ARRAY[@]}"; do
-    echo "${HEALTHY_SERVICES_ARRAY[@]}"
-  done
+  echo "All services healthy: ${HEALTHY_SERVICES_ARRAY[*]}"
   echo "Creating test s3 bucket..."
   EXIT_CODE=$(create_s3_bucket)
 
