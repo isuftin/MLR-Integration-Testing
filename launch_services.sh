@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Useful for environments where the Docker engine is not running on the host
+# (like Docker Machine)
+DOCKER_ENGINE_IP="${DOCKER_ENGINE_IP:-127.0.0.1}"
+
 SERVICE_NAMES="mlr-gateway \
   mlr-legacy \
   mlr-notification \
@@ -23,7 +27,7 @@ destroy_services () {
 }
 
 create_s3_bucket () {
-  curl --request PUT http://127.0.0.1:8080/mock-bucket-test
+  curl --request PUT "http://${DOCKER_ENGINE_IP}:8080/mock-bucket-test"
 }
 
 echo "Launching MLR services..."
@@ -37,8 +41,8 @@ echo "Launching MLR services..."
   fi
 
   HEALTHY_SERVICES=$(get_healthy_services)
-  SERVICE_NAMES_ARRAY=( $SERVICE_NAMES )
-  HEALTHY_SERVICES_ARRAY=( $HEALTHY_SERVICES )
+  SERVICE_NAMES_ARRAY=( "${SERVICE_NAMES}" )
+  HEALTHY_SERVICES_ARRAY=( "${HEALTHY_SERVICES}" )
   count=1
   limit=240
   until [[ ${#HEALTHY_SERVICES_ARRAY[@]} -eq ${#SERVICE_NAMES_ARRAY[@]} ]]; do
@@ -51,7 +55,7 @@ echo "Launching MLR services..."
     for SERVICE_NAME in "${SERVICE_NAMES_ARRAY[@]}"; do
       skip=
       for HEALTHY_SERVICE in "${HEALTHY_SERVICES_ARRAY[@]}"; do
-        [[ $SERVICE_NAME == $HEALTHY_SERVICE ]] && { skip=1;break; }
+        [[ "${SERVICE_NAME}" == "${HEALTHY_SERVICE}" ]] && { skip=1;break; }
       done
       [[ -n $skip ]] || UNHEALTHY_SERVICES_ARRAY+=("$SERVICE_NAME")
     done
@@ -59,22 +63,31 @@ echo "Launching MLR services..."
     # Did we hit our testing limit? If so, bail.
     if [ $count -eq $limit ]; then
       echo "Docker containers coult not reach a healthy status in $limit tries"
-      echo "Services still not healthy: ${UNHEALTHY_SERVICES_ARRAY[@]}"
+      echo "Services still not healthy: "
+      for UNHEALTHY_SERVICE in "${UNHEALTHY_SERVICES_ARRAY[@]}"; do
+        echo "${UNHEALTHY_SERVICE}"
+      done
       destroy_services
       exit 1
     fi
 
     # Update the healthy services
     HEALTHY_SERVICES=$(get_healthy_services)
-    HEALTHY_SERVICES_ARRAY=( $HEALTHY_SERVICES )
+    HEALTHY_SERVICES_ARRAY=( "$HEALTHY_SERVICES" )
     echo "Not all services healthy yet."
-    echo "Services still not healthy: ${UNHEALTHY_SERVICES_ARRAY[@]}"
+    echo "Services still not healthy: "
+    for UNHEALTHY_SERVICE in "${UNHEALTHY_SERVICES_ARRAY[@]}"; do
+      echo "${UNHEALTHY_SERVICE}"
+    done
+
   done
 
-  echo "All services healthy: ${HEALTHY_SERVICES_ARRAY[@]}"
-
+  echo "All services healthy:"
+  for HEALTHY_SERVICE in "${HEALTHY_SERVICES_ARRAY[@]}"; do
+    echo "${HEALTHY_SERVICES_ARRAY[@]}"
+  done
   echo "Creating test s3 bucket..."
-  CREATE_CODE=$(create_s3_bucket)
+  EXIT_CODE=$(create_s3_bucket)
 
   if [[ $EXIT_CODE -ne 0 ]]; then
     echo "Could not create S3 bucket"
