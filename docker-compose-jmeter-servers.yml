@@ -7,6 +7,7 @@
       - "./tests/output:/tests/output"
       - "./jmeter-docker/jmeter-server.properties:/jmeter/jmeter.properties"
       - "./jmeter-docker/config/rmi_keystore.jks:/jmeter/rmi_keystore.jks"
+      - "./tests/data:/tests/data"
 
   x-common-commands:
     &command

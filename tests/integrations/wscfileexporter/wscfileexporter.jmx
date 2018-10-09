@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.0 r1840935">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="WSC File Exporter Testing" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.tearDown_on_shutdown">true</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+    <hashTree>
+      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments">
+          <elementProp name="SERVER_HOST" elementType="Argument">
+            <stringProp name="Argument.name">SERVER_HOST</stringProp>
+            <stringProp name="Argument.value">mlr.wsc.file.exporter</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="SERVER_PORT" elementType="Argument">
+            <stringProp name="Argument.name">SERVER_PORT</stringProp>
+            <stringProp name="Argument.value">6024</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+        </collectionProp>
+      </Arguments>
+      <hashTree/>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Jmeter Users" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">2</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">5</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">5</stringProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+      </ThreadGroup>
+      <hashTree>
+        <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HTTP Cookie Manager" enabled="true">
+          <collectionProp name="CookieManager.cookies"/>
+          <stringProp name="TestPlan.comments">Stores Water Auth Token</stringProp>
+          <boolProp name="CookieManager.clearEachIteration">false</boolProp>
+        </CookieManager>
+        <hashTree/>
+        <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Login" enabled="true">
+          <stringProp name="IncludeController.includepath">../common/water-auth-login.jmx</stringProp>
+        </IncludeController>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Basic Add Export Test" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;agencyCode&quot;: &quot;string&quot;,&#xd;
+  &quot;agencyUseCode&quot;: &quot;string&quot;,&#xd;
+  &quot;altitude&quot;: &quot;string&quot;,&#xd;
+  &quot;altitudeAccuracyValue&quot;: &quot;string&quot;,&#xd;
+  &quot;altitudeDatumCode&quot;: &quot;string&quot;,&#xd;
+  &quot;altitudeMethodCode&quot;: &quot;string&quot;,&#xd;
+  &quot;aquiferCode&quot;: &quot;string&quot;,&#xd;
+  &quot;aquiferTypeCode&quot;: &quot;string&quot;,&#xd;
+  &quot;basinCode&quot;: &quot;string&quot;,&#xd;
+  &quot;contributingDrainageArea&quot;: &quot;string&quot;,&#xd;
+  &quot;coordinateAccuracyCode&quot;: &quot;string&quot;,&#xd;
+  &quot;coordinateDatumCode&quot;: &quot;string&quot;,&#xd;
+  &quot;coordinateMethodCode&quot;: &quot;string&quot;,&#xd;
+  &quot;countryCode&quot;: &quot;string&quot;,&#xd;
+  &quot;countyCode&quot;: &quot;string&quot;,&#xd;
+  &quot;created&quot;: &quot;string&quot;,&#xd;
+  &quot;createdBy&quot;: &quot;string&quot;,&#xd;
+  &quot;dataReliabilityCode&quot;: &quot;string&quot;,&#xd;
+  &quot;dataTypesCode&quot;: &quot;string&quot;,&#xd;
+  &quot;daylightSavingsTimeFlag&quot;: &quot;string&quot;,&#xd;
+  &quot;decimalLatitude&quot;: 0,&#xd;
+  &quot;decimalLongitude&quot;: 0,&#xd;
+  &quot;districtCode&quot;: &quot;string&quot;,&#xd;
+  &quot;drainageArea&quot;: &quot;string&quot;,&#xd;
+  &quot;firstConstructionDate&quot;: &quot;string&quot;,&#xd;
+  &quot;gwFileCode&quot;: &quot;string&quot;,&#xd;
+  &quot;holeDepth&quot;: &quot;string&quot;,&#xd;
+  &quot;hydrologicUnitCode&quot;: &quot;string&quot;,&#xd;
+  &quot;id&quot;: 0,&#xd;
+  &quot;instrumentsCode&quot;: &quot;string&quot;,&#xd;
+  &quot;landNet&quot;: &quot;string&quot;,&#xd;
+  &quot;latitude&quot;: &quot;string&quot;,&#xd;
+  &quot;longitude&quot;: &quot;string&quot;,&#xd;
+  &quot;mapName&quot;: &quot;string&quot;,&#xd;
+  &quot;mapScale&quot;: &quot;string&quot;,&#xd;
+  &quot;minorCivilDivisionCode&quot;: &quot;string&quot;,&#xd;
+  &quot;nationalAquiferCode&quot;: &quot;string&quot;,&#xd;
+  &quot;nationalWaterUseCode&quot;: &quot;string&quot;,&#xd;
+  &quot;primaryUseOfSite&quot;: &quot;string&quot;,&#xd;
+  &quot;primaryUseOfWaterCode&quot;: &quot;string&quot;,&#xd;
+  &quot;projectNumber&quot;: &quot;string&quot;,&#xd;
+  &quot;remarks&quot;: &quot;string&quot;,&#xd;
+  &quot;secondaryUseOfSite&quot;: &quot;string&quot;,&#xd;
+  &quot;secondaryUseOfWaterCode&quot;: &quot;string&quot;,&#xd;
+  &quot;siteEstablishmentDate&quot;: &quot;string&quot;,&#xd;
+  &quot;siteNumber&quot;: &quot;string&quot;,&#xd;
+  &quot;siteTypeCode&quot;: &quot;string&quot;,&#xd;
+  &quot;siteWebReadyCode&quot;: &quot;string&quot;,&#xd;
+  &quot;sourceOfDepthCode&quot;: &quot;string&quot;,&#xd;
+  &quot;stateFipsCode&quot;: &quot;string&quot;,&#xd;
+  &quot;stationIx&quot;: &quot;string&quot;,&#xd;
+  &quot;stationName&quot;: &quot;string&quot;,&#xd;
+  &quot;tertiaryUseOfSiteCode&quot;: &quot;string&quot;,&#xd;
+  &quot;tertiaryUseOfWaterCode&quot;: &quot;string&quot;,&#xd;
+  &quot;timeZoneCode&quot;: &quot;string&quot;,&#xd;
+  &quot;topographicCode&quot;: &quot;string&quot;,&#xd;
+  &quot;updated&quot;: &quot;string&quot;,&#xd;
+  &quot;updatedBy&quot;: &quot;string&quot;,&#xd;
+  &quot;wellDepth&quot;: &quot;string&quot;&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">${SERVER_HOST}</stringProp>
+          <stringProp name="HTTPSampler.port">${SERVER_PORT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/file_export/add</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">true</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">Bearer ${ACCESS_TOKEN}</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">2</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Basic Update Export Test" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;agencyCode&quot;: &quot;string&quot;,&#xd;
+  &quot;agencyUseCode&quot;: &quot;string&quot;,&#xd;
+  &quot;altitude&quot;: &quot;string&quot;,&#xd;
+  &quot;altitudeAccuracyValue&quot;: &quot;string&quot;,&#xd;
+  &quot;altitudeDatumCode&quot;: &quot;string&quot;,&#xd;
+  &quot;altitudeMethodCode&quot;: &quot;string&quot;,&#xd;
+  &quot;aquiferCode&quot;: &quot;string&quot;,&#xd;
+  &quot;aquiferTypeCode&quot;: &quot;string&quot;,&#xd;
+  &quot;basinCode&quot;: &quot;string&quot;,&#xd;
+  &quot;contributingDrainageArea&quot;: &quot;string&quot;,&#xd;
+  &quot;coordinateAccuracyCode&quot;: &quot;string&quot;,&#xd;
+  &quot;coordinateDatumCode&quot;: &quot;string&quot;,&#xd;
+  &quot;coordinateMethodCode&quot;: &quot;string&quot;,&#xd;
+  &quot;countryCode&quot;: &quot;string&quot;,&#xd;
+  &quot;countyCode&quot;: &quot;string&quot;,&#xd;
+  &quot;created&quot;: &quot;string&quot;,&#xd;
+  &quot;createdBy&quot;: &quot;string&quot;,&#xd;
+  &quot;dataReliabilityCode&quot;: &quot;string&quot;,&#xd;
+  &quot;dataTypesCode&quot;: &quot;string&quot;,&#xd;
+  &quot;daylightSavingsTimeFlag&quot;: &quot;string&quot;,&#xd;
+  &quot;decimalLatitude&quot;: 0,&#xd;
+  &quot;decimalLongitude&quot;: 0,&#xd;
+  &quot;districtCode&quot;: &quot;string&quot;,&#xd;
+  &quot;drainageArea&quot;: &quot;string&quot;,&#xd;
+  &quot;firstConstructionDate&quot;: &quot;string&quot;,&#xd;
+  &quot;gwFileCode&quot;: &quot;string&quot;,&#xd;
+  &quot;holeDepth&quot;: &quot;string&quot;,&#xd;
+  &quot;hydrologicUnitCode&quot;: &quot;string&quot;,&#xd;
+  &quot;id&quot;: 0,&#xd;
+  &quot;instrumentsCode&quot;: &quot;string&quot;,&#xd;
+  &quot;landNet&quot;: &quot;string&quot;,&#xd;
+  &quot;latitude&quot;: &quot;string&quot;,&#xd;
+  &quot;longitude&quot;: &quot;string&quot;,&#xd;
+  &quot;mapName&quot;: &quot;string&quot;,&#xd;
+  &quot;mapScale&quot;: &quot;string&quot;,&#xd;
+  &quot;minorCivilDivisionCode&quot;: &quot;string&quot;,&#xd;
+  &quot;nationalAquiferCode&quot;: &quot;string&quot;,&#xd;
+  &quot;nationalWaterUseCode&quot;: &quot;string&quot;,&#xd;
+  &quot;primaryUseOfSite&quot;: &quot;string&quot;,&#xd;
+  &quot;primaryUseOfWaterCode&quot;: &quot;string&quot;,&#xd;
+  &quot;projectNumber&quot;: &quot;string&quot;,&#xd;
+  &quot;remarks&quot;: &quot;string&quot;,&#xd;
+  &quot;secondaryUseOfSite&quot;: &quot;string&quot;,&#xd;
+  &quot;secondaryUseOfWaterCode&quot;: &quot;string&quot;,&#xd;
+  &quot;siteEstablishmentDate&quot;: &quot;string&quot;,&#xd;
+  &quot;siteNumber&quot;: &quot;string&quot;,&#xd;
+  &quot;siteTypeCode&quot;: &quot;string&quot;,&#xd;
+  &quot;siteWebReadyCode&quot;: &quot;string&quot;,&#xd;
+  &quot;sourceOfDepthCode&quot;: &quot;string&quot;,&#xd;
+  &quot;stateFipsCode&quot;: &quot;string&quot;,&#xd;
+  &quot;stationIx&quot;: &quot;string&quot;,&#xd;
+  &quot;stationName&quot;: &quot;string&quot;,&#xd;
+  &quot;tertiaryUseOfSiteCode&quot;: &quot;string&quot;,&#xd;
+  &quot;tertiaryUseOfWaterCode&quot;: &quot;string&quot;,&#xd;
+  &quot;timeZoneCode&quot;: &quot;string&quot;,&#xd;
+  &quot;topographicCode&quot;: &quot;string&quot;,&#xd;
+  &quot;updated&quot;: &quot;string&quot;,&#xd;
+  &quot;updatedBy&quot;: &quot;string&quot;,&#xd;
+  &quot;wellDepth&quot;: &quot;string&quot;&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">${SERVER_HOST}</stringProp>
+          <stringProp name="HTTPSampler.port">${SERVER_PORT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/file_export/update</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">true</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">Bearer ${ACCESS_TOKEN}</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">2</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>

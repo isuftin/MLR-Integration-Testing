@@ -22,13 +22,17 @@ destroy_services () {
   docker-compose -f docker-compose-services.yml down --volumes
 }
 
+create_s3_bucket () {
+  curl --request PUT http://127.0.0.1:8080/mock-bucket-test
+}
+
 echo "Launching MLR services..."
 {
   EXIT_CODE=$(launch_services)
 
   if [[ $EXIT_CODE -ne 0 ]]; then
     echo "Could not launch MLR services"
-  destroy_services
+    destroy_services
     exit $EXIT_CODE
   fi
 
@@ -68,6 +72,17 @@ echo "Launching MLR services..."
   done
 
   echo "All services healthy: ${HEALTHY_SERVICES_ARRAY[@]}"
+
+  echo "Creating test s3 bucket..."
+  CREATE_CODE=$(create_s3_bucket)
+
+  if [[ $EXIT_CODE -ne 0 ]]; then
+    echo "Could not create S3 bucket"
+    destroy_services
+    exit $EXIT_CODE
+  fi
+
+  echo "Bucket created successfully"
 
   exit 0
 } || {
