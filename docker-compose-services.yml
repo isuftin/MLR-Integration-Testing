@@ -11,8 +11,20 @@
       name: mlr-it-net
 
   services:
+    mock-s3:
+      image: andrewgaul/s3proxy
+      env_file:
+        - configuration/config/mock-s3/config.env
+      networks:
+        mlr-it-net:
+          aliases:
+            - s3.mock.server
+      hostname: s3.mock.server
+      ports:
+        - "8080:80"
+
     smtp-server:
-      image: namshi/smtp:latest
+      image: digiplant/fake-smtp:latest
       networks:
         mlr-it-net:
           aliases:
