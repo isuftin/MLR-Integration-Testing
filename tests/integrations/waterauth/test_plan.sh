@@ -1,6 +1,5 @@
 #!/bin/bash
 
-SERVICE_NAME="water-auth-server"
 OUTPUT_DIR="${OUTPUT_DIR:-`pwd`/tests/output}"
 TESTS_DIR="${TESTS_DIR:-`pwd`/tests/integrations}"
 JMETER_DOCKER_DIR="${JMETER_DOCKER_DIR:-`pwd`/jmeter-docker}"

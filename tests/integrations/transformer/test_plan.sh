@@ -1,7 +1,5 @@
 #!/bin/bash
-echo `pwd`
 
-SERVICE_NAME="water-auth-server"
 DATA_DIR="${DATA_DIR:-`pwd`/tests/data}"
 OUTPUT_DIR="${OUTPUT_DIR:-`pwd`/tests/output}"
 TESTS_DIR="${TESTS_DIR:-`pwd`/tests/integrations}"
