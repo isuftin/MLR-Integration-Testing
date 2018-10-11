@@ -17,8 +17,8 @@ docker run --rm \
     -f \
     -n \
     -e -o /tests/output/ddot/jmeter-output/dash \
-    -j /tests/output/ddot/jmeter-output/jmeter.log \
-    -l /tests/output/ddot/jmeter-output/jmeter-testing.jtl \
+    -j /tests/output/ddot/jmeter-output/jmeter-ddot.log \
+    -l /tests/output/ddot/jmeter-output/jmeter-testing-ddot.jtl \
     -JJMETER_OUTPUT_PATH=/tests/output/ddot/test-output \
     -t /tests/integrations/ddot/ddot.jmx \
     -Rjmeter.server.1,jmeter.server.2,jmeter.server.3

@@ -17,8 +17,8 @@ docker run --rm \
     -f \
     -n \
     -e -o /tests/output/wscfileexporter/jmeter-output/dash \
-    -j /tests/output/wscfileexporter/jmeter-output/jmeter.log \
-    -l /tests/output/wscfileexporter/jmeter-output/jmeter-testing.jtl \
+    -j /tests/output/wscfileexporter/jmeter-output/jmeter-wscfileexporter.log \
+    -l /tests/output/wscfileexporter/jmeter-output/jmeter-testing-wscfileexporter.jtl \
     -JJMETER_OUTPUT_PATH=/tests/output/wscfileexporter/test-output \
     -t /tests/integrations/wscfileexporter/wscfileexporter.jmx \
     -Rjmeter.server.1,jmeter.server.2,jmeter.server.3

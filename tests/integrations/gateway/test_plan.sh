@@ -17,8 +17,8 @@ docker run --rm \
     -f \
     -n \
     -e -o /tests/output/gateway/jmeter-output/dash \
-    -j /tests/output/gateway/jmeter-output/jmeter.log \
-    -l /tests/output/gateway/jmeter-output/jmeter-testing.jtl \
+    -j /tests/output/gateway/jmeter-output/jmeter-gateway.log \
+    -l /tests/output/gateway/jmeter-output/jmeter-testing-gateway.jtl \
     -JJMETER_OUTPUT_PATH=/tests/output/gateway/test-output \
     -t /tests/integrations/gateway/gateway.jmx \
     -Rjmeter.server.1,jmeter.server.2,jmeter.server.3

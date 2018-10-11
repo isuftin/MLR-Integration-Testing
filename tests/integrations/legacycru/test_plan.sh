@@ -17,8 +17,8 @@ docker run --rm \
     -f \
     -n \
     -e -o /tests/output/legacycru/jmeter-output/dash \
-    -j /tests/output/legacycru/jmeter-output/jmeter.log \
-    -l /tests/output/legacycru/jmeter-output/jmeter-testing.jtl \
+    -j /tests/output/legacycru/jmeter-output/jmeter-legacycru.log \
+    -l /tests/output/legacycru/jmeter-output/jmeter-testing-legacycru.jtl \
     -JJMETER_OUTPUT_PATH=/tests/output/legacycru/test-output \
     -t /tests/integrations/legacycru/legacycru.jmx \
     -Rjmeter.server.1,jmeter.server.2,jmeter.server.3
