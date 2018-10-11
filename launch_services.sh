@@ -42,7 +42,7 @@ echo "Launching MLR services..."
 
   HEALTHY_SERVICES="$(get_healthy_services)"
   read -r -a SERVICE_NAMES_ARRAY <<< $SERVICE_NAMES
-  IFS=$'\n' read -d '' -r -a HEALTHY_SERVICES_ARRAY <<< $HEALTHY_SERVICES
+  read -d '' -r -a HEALTHY_SERVICES_ARRAY <<< $HEALTHY_SERVICES
   count=1
   limit=240
   until [[ ${#HEALTHY_SERVICES_ARRAY[@]} -eq ${#SERVICE_NAMES_ARRAY[@]} ]]; do
@@ -70,7 +70,7 @@ echo "Launching MLR services..."
 
     # Update the healthy services
     HEALTHY_SERVICES="$(get_healthy_services)"
-    IFS=$'\n' read -d '' -r -a HEALTHY_SERVICES_ARRAY <<< $HEALTHY_SERVICES
+    read -d '' -r -a HEALTHY_SERVICES_ARRAY <<< $HEALTHY_SERVICES
     echo "Services still not healthy: ${UNHEALTHY_SERVICES_ARRAY[*]}"
 
   done
