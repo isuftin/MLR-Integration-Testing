@@ -15,8 +15,8 @@ docker run --rm \
     -f \
     -n \
     -e -o /tests/output/waterauth/jmeter-output/dash \
-    -j /tests/output/waterauth/jmeter-output/jmeter.log \
-    -l /tests/output/waterauth/jmeter-output/jmeter-testing.jtl \
+    -j /tests/output/waterauth/jmeter-output/jmeter-waterauth.log \
+    -l /tests/output/waterauth/jmeter-output/jmeter-testing-waterauth.jtl \
     -JJMETER_OUTPUT_PATH=/tests/output/waterauth/test-output \
     -t /tests/integrations/waterauth/waterauth.jmx \
     -Rjmeter.server.1,jmeter.server.2,jmeter.server.3

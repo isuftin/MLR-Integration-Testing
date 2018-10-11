@@ -17,8 +17,8 @@ docker run --rm \
     -f \
     -n \
     -e -o /tests/output/notification/jmeter-output/dash \
-    -j /tests/output/notification/jmeter-output/jmeter.log \
-    -l /tests/output/notification/jmeter-output/jmeter-testing.jtl \
+    -j /tests/output/notification/jmeter-output/jmeter-notification.log \
+    -l /tests/output/notification/jmeter-output/jmeter-testing-notification.jtl \
     -JJMETER_OUTPUT_PATH=/tests/output/notification/test-output \
     -t /tests/integrations/notification/notification.jmx \
     -Rjmeter.server.1,jmeter.server.2,jmeter.server.3
