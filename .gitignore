@@ -1,2 +1,3 @@
 jmeter.log
 tests/output/**
+ssl/wildcard.*
