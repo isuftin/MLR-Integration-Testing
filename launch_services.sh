@@ -32,9 +32,10 @@ create_s3_bucket () {
 
 echo "Launching MLR services..."
 {
-  EXIT_CODE=$(launch_services)
+  launch_services
+  EXIT_CODE=$?
 
-  if [[ $EXIT_CODE -ne 0 ]]; then
+  if [ $EXIT_CODE -ne 0 ]; then
     echo "Could not launch MLR services"
     destroy_services
     exit $EXIT_CODE
@@ -77,9 +78,10 @@ echo "Launching MLR services..."
 
   echo "All services healthy: ${HEALTHY_SERVICES_ARRAY[*]}"
   echo "Creating test s3 bucket..."
-  EXIT_CODE=$(create_s3_bucket)
+  create_s3_bucket
+  EXIT_CODE=$?
 
-  if [[ $EXIT_CODE -ne 0 ]]; then
+  if [ $EXIT_CODE -ne 0 ]; then
     echo "Could not create S3 bucket"
     destroy_services
     exit $EXIT_CODE
@@ -88,7 +90,7 @@ echo "Launching MLR services..."
   echo "Bucket created successfully"
 
   exit 0
-} || {
+  } || {
   echo "Something went horribly wrong"
   destroy_services
   exit 1
