@@ -16,7 +16,7 @@
         <collectionProp name="Arguments.arguments">
           <elementProp name="SERVER_HOST" elementType="Argument">
             <stringProp name="Argument.name">SERVER_HOST</stringProp>
-            <stringProp name="Argument.value">mlr.validator</stringProp>
+            <stringProp name="Argument.value">${__P(SERVER_HOST,mlr.validator)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="SERVER_PORT" elementType="Argument">
@@ -26,7 +26,7 @@
           </elementProp>
           <elementProp name="LEGACY_CRU_HOST" elementType="Argument">
             <stringProp name="Argument.name">LEGACY_CRU_HOST</stringProp>
-            <stringProp name="Argument.value">mlr.legacy</stringProp>
+            <stringProp name="Argument.value">${__P(LEGACY_CRU_HOST,mlr.legacy)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="LEGACY_CRU_PORT" elementType="Argument">
@@ -36,12 +36,17 @@
           </elementProp>
           <elementProp name="DDOT_HOST" elementType="Argument">
             <stringProp name="Argument.name">DDOT_HOST</stringProp>
-            <stringProp name="Argument.value">mlr.ddot.ingester</stringProp>
+            <stringProp name="Argument.value">${__P(DDOT_HOST,mlr.ddot.ingester)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="DDOT_PORT" elementType="Argument">
             <stringProp name="Argument.name">DDOT_PORT</stringProp>
             <stringProp name="Argument.value">6028</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="DDOT_FILES_DIR" elementType="Argument">
+            <stringProp name="Argument.name">DDOT_FILES_DIR</stringProp>
+            <stringProp name="Argument.value">${__P(DDOT_FILES_DIR,/tests/data/ddot_files)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -143,8 +148,8 @@
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Ddot Add Location 1" enabled="true">
           <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
             <collectionProp name="HTTPFileArgs.files">
-              <elementProp name="/tests/data/ddot_files/adds/valid/d.validator_test.001" elementType="HTTPFileArg">
-                <stringProp name="File.path">/tests/data/ddot_files/adds/valid/d.validator_test.001</stringProp>
+              <elementProp name="${DDOT_FILES_DIR}/adds/valid/d.validator_test.001" elementType="HTTPFileArg">
+                <stringProp name="File.path">${DDOT_FILES_DIR}/adds/valid/d.validator_test.001</stringProp>
                 <stringProp name="File.paramname">file</stringProp>
                 <stringProp name="File.mimetype">text/plain</stringProp>
               </elementProp>
@@ -199,8 +204,8 @@
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Ddot Update Location 1" enabled="true">
           <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
             <collectionProp name="HTTPFileArgs.files">
-              <elementProp name="/tests/data/ddot_files/modifies/valid/d.validator_test.001" elementType="HTTPFileArg">
-                <stringProp name="File.path">/tests/data/ddot_files/modifies/valid/d.validator_test.001</stringProp>
+              <elementProp name="${DDOT_FILES_DIR}/modifies/valid/d.validator_test.001" elementType="HTTPFileArg">
+                <stringProp name="File.path">${DDOT_FILES_DIR}/modifies/valid/d.validator_test.001</stringProp>
                 <stringProp name="File.paramname">file</stringProp>
                 <stringProp name="File.mimetype">text/plain</stringProp>
               </elementProp>

@@ -16,7 +16,7 @@
         <collectionProp name="Arguments.arguments">
           <elementProp name="WATERAUTH_HOST" elementType="Argument">
             <stringProp name="Argument.name">WATERAUTH_HOST</stringProp>
-            <stringProp name="Argument.value">water.auth.server</stringProp>
+            <stringProp name="Argument.value">${__P(WATERAUTH_HOST,water.auth.server)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="WATERAUTH_PORT" elementType="Argument">
@@ -26,7 +26,7 @@
           </elementProp>
           <elementProp name="SERVER_HOST" elementType="Argument">
             <stringProp name="Argument.name">SERVER_HOST</stringProp>
-            <stringProp name="Argument.value">mlr.gateway</stringProp>
+            <stringProp name="Argument.value">${__P(SERVER_HOST,mlr.gateway)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="SERVER_PORT" elementType="Argument">
