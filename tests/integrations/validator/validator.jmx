@@ -410,7 +410,7 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-  &quot;ddotLocation&quot;: ${DDOT_ADD_JSON_1}&#xd;
+  &quot;ddotLocation&quot;: ${newJson},&#xd;
   &quot;existingLocation&quot;: {}&#xd;
 }&#xd;
 &#xd;
