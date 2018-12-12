@@ -15,7 +15,7 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
   - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
-  - chmod +x pull_containers.sh && ./pull_containers.sh
+  - chmod +x pull-containers.sh && ./pull-containers.sh
 install:
   - echo "done"
 
