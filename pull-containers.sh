@@ -8,7 +8,7 @@ rm -f "$DIR/ssl/wildcard.*" || true
 
 chmod +x "$DIR/create_certificates.sh"
 
-$DIR/create_certificates.sh
+"$DIR/create_certificates.sh"
 
 docker run --rm -d -p 8444:443 -p 8080:80 -v "$DIR/.travis/nginx.conf:/etc/nginx/nginx.conf" -v "$DIR/ssl/wildcard.crt:/etc/nginx/wildcard.crt" -v "$DIR/ssl/wildcard.key:/etc/nginx/wildcard.key" --name nginx nginx:latest
 
