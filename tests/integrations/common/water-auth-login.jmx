@@ -23,7 +23,7 @@
             </elementProp>
             <elementProp name="WATERAUTH_PORT" elementType="Argument">
               <stringProp name="Argument.name">WATERAUTH_PORT</stringProp>
-              <stringProp name="Argument.value">8443</stringProp>
+              <stringProp name="Argument.value">${__P(WATERAUTH_PORT,8443)}</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
           </collectionProp>

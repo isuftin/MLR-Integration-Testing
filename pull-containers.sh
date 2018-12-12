@@ -2,6 +2,8 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
+mkdir -p "$DIR/ssl" || true
+
 rm -f "$DIR/ssl/wildcard.*" || true
 
 chmod +x "$DIR/create_certificates.sh"
