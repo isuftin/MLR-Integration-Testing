@@ -21,7 +21,7 @@
           </elementProp>
           <elementProp name="WATERAUTH_PORT" elementType="Argument">
             <stringProp name="Argument.name">WATERAUTH_PORT</stringProp>
-            <stringProp name="Argument.value">8443</stringProp>
+            <stringProp name="Argument.value">${__P(WATERAUTH_PORT,8443)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="SERVER_HOST" elementType="Argument">
@@ -31,12 +31,22 @@
           </elementProp>
           <elementProp name="SERVER_PORT" elementType="Argument">
             <stringProp name="Argument.name">SERVER_PORT</stringProp>
-            <stringProp name="Argument.value">6026</stringProp>
+            <stringProp name="Argument.value">${__P(SERVER_PORT,6026)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="JMETER_OUTPUT_PATH" elementType="Argument">
             <stringProp name="Argument.name">JMETER_OUTPUT_PATH</stringProp>
-            <stringProp name="Argument.value">tests/output/waterauth/test-output</stringProp>
+            <stringProp name="Argument.value">${__P(JMETER_OUTPUT_PATH,tests/output/gateway/test-output)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="TEST_FILES_DIR" elementType="Argument">
+            <stringProp name="Argument.name">TEST_FILES_DIR</stringProp>
+            <stringProp name="Argument.value">${__P(TEST_FILES_DIR,/tests/data)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="GATEWAY_FILE_PREFIX" elementType="Argument">
+            <stringProp name="Argument.name">GATEWAY_FILE_PREFIX</stringProp>
+            <stringProp name="Argument.value">${__P(GATEWAY_FILE_PREFIX,${__machineName})}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -107,8 +117,8 @@
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Perform Export Workflow - Failure" enabled="true">
           <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
             <collectionProp name="HTTPFileArgs.files">
-              <elementProp name="/tests/data/gateway/ddots/${__machineName}.update" elementType="HTTPFileArg">
-                <stringProp name="File.path">/tests/data/gateway/ddots/${__machineName}.update</stringProp>
+              <elementProp name="${TEST_FILES_DIR}/gateway/ddots/${GATEWAY_FILE_PREFIX}.update" elementType="HTTPFileArg">
+                <stringProp name="File.path">${TEST_FILES_DIR}/gateway/ddots/${GATEWAY_FILE_PREFIX}.update</stringProp>
                 <stringProp name="File.paramname">file</stringProp>
                 <stringProp name="File.mimetype">text/plain</stringProp>
               </elementProp>
@@ -247,8 +257,8 @@
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Perform Update Validation - Failure" enabled="true">
           <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
             <collectionProp name="HTTPFileArgs.files">
-              <elementProp name="/tests/data/gateway/ddots/${__machineName}.update" elementType="HTTPFileArg">
-                <stringProp name="File.path">/tests/data/gateway/ddots/${__machineName}.update</stringProp>
+              <elementProp name="${TEST_FILES_DIR}/gateway/ddots/${GATEWAY_FILE_PREFIX}.update" elementType="HTTPFileArg">
+                <stringProp name="File.path">${TEST_FILES_DIR}/gateway/ddots/${GATEWAY_FILE_PREFIX}.update</stringProp>
                 <stringProp name="File.paramname">file</stringProp>
                 <stringProp name="File.mimetype">text/plain</stringProp>
               </elementProp>
@@ -387,8 +397,8 @@
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Perform add validation - Success" enabled="true">
           <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
             <collectionProp name="HTTPFileArgs.files">
-              <elementProp name="/tests/data/gateway/ddots/${__machineName}.add.${__threadNum}" elementType="HTTPFileArg">
-                <stringProp name="File.path">/tests/data/gateway/ddots/${__machineName}.add.${__threadNum}</stringProp>
+              <elementProp name="${TEST_FILES_DIR}/gateway/ddots/${GATEWAY_FILE_PREFIX}.add.${__threadNum}" elementType="HTTPFileArg">
+                <stringProp name="File.path">${TEST_FILES_DIR}/gateway/ddots/${GATEWAY_FILE_PREFIX}.add.${__threadNum}</stringProp>
                 <stringProp name="File.paramname">file</stringProp>
                 <stringProp name="File.mimetype">text/plain</stringProp>
               </elementProp>
@@ -529,8 +539,8 @@
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Perform Full Valid Add Workflow" enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
-                <elementProp name="/tests/data/gateway/ddots/${__machineName}.add.${__threadNum}" elementType="HTTPFileArg">
-                  <stringProp name="File.path">/tests/data/gateway/ddots/${__machineName}.add.${__threadNum}</stringProp>
+                <elementProp name="${TEST_FILES_DIR}/gateway/ddots/${GATEWAY_FILE_PREFIX}.add.${__threadNum}" elementType="HTTPFileArg">
+                  <stringProp name="File.path">${TEST_FILES_DIR}/gateway/ddots/${GATEWAY_FILE_PREFIX}.add.${__threadNum}</stringProp>
                   <stringProp name="File.paramname">file</stringProp>
                   <stringProp name="File.mimetype">text/plain</stringProp>
                 </elementProp>
@@ -606,8 +616,8 @@
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Perform Full Add Workflow - Duplicate Error" enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
-                <elementProp name="/tests/data/gateway/ddots/${__machineName}.add.${__threadNum}" elementType="HTTPFileArg">
-                  <stringProp name="File.path">/tests/data/gateway/ddots/${__machineName}.add.${__threadNum}</stringProp>
+                <elementProp name="${TEST_FILES_DIR}/gateway/ddots/${GATEWAY_FILE_PREFIX}.add.${__threadNum}" elementType="HTTPFileArg">
+                  <stringProp name="File.path">${TEST_FILES_DIR}/gateway/ddots/${GATEWAY_FILE_PREFIX}.add.${__threadNum}</stringProp>
                   <stringProp name="File.paramname">file</stringProp>
                   <stringProp name="File.mimetype">text/plain</stringProp>
                 </elementProp>
@@ -747,8 +757,8 @@
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Perform Update Validation - Sucess" enabled="true">
           <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
             <collectionProp name="HTTPFileArgs.files">
-              <elementProp name="/tests/data/gateway/ddots/${__machineName}.update" elementType="HTTPFileArg">
-                <stringProp name="File.path">/tests/data/gateway/ddots/${__machineName}.update</stringProp>
+              <elementProp name="${TEST_FILES_DIR}/gateway/ddots/${GATEWAY_FILE_PREFIX}.update" elementType="HTTPFileArg">
+                <stringProp name="File.path">${TEST_FILES_DIR}/gateway/ddots/${GATEWAY_FILE_PREFIX}.update</stringProp>
                 <stringProp name="File.paramname">file</stringProp>
                 <stringProp name="File.mimetype">text/plain</stringProp>
               </elementProp>
@@ -887,8 +897,8 @@
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Perform add validation - failure" enabled="true">
           <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
             <collectionProp name="HTTPFileArgs.files">
-              <elementProp name="/tests/data/gateway/ddots/${__machineName}.add.${__threadNum}" elementType="HTTPFileArg">
-                <stringProp name="File.path">/tests/data/gateway/ddots/${__machineName}.add.${__threadNum}</stringProp>
+              <elementProp name="${TEST_FILES_DIR}/gateway/ddots/${GATEWAY_FILE_PREFIX}.add.${__threadNum}" elementType="HTTPFileArg">
+                <stringProp name="File.path">${TEST_FILES_DIR}/gateway/ddots/${GATEWAY_FILE_PREFIX}.add.${__threadNum}</stringProp>
                 <stringProp name="File.paramname">file</stringProp>
                 <stringProp name="File.mimetype">text/plain</stringProp>
               </elementProp>
@@ -1027,8 +1037,8 @@
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Perform Full Update Workflow" enabled="true">
           <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
             <collectionProp name="HTTPFileArgs.files">
-              <elementProp name="/tests/data/gateway/ddots/${__machineName}.update" elementType="HTTPFileArg">
-                <stringProp name="File.path">/tests/data/gateway/ddots/${__machineName}.update</stringProp>
+              <elementProp name="${TEST_FILES_DIR}/gateway/ddots/${GATEWAY_FILE_PREFIX}.update" elementType="HTTPFileArg">
+                <stringProp name="File.path">${TEST_FILES_DIR}/gateway/ddots/${GATEWAY_FILE_PREFIX}.update</stringProp>
                 <stringProp name="File.paramname">file</stringProp>
                 <stringProp name="File.mimetype">text/plain</stringProp>
               </elementProp>
@@ -1167,8 +1177,8 @@
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Perform Export Workflow - Success" enabled="true">
           <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
             <collectionProp name="HTTPFileArgs.files">
-              <elementProp name="/tests/data/gateway/ddots/${__machineName}.update" elementType="HTTPFileArg">
-                <stringProp name="File.path">/tests/data/gateway/ddots/${__machineName}.update</stringProp>
+              <elementProp name="${TEST_FILES_DIR}/gateway/ddots/${GATEWAY_FILE_PREFIX}.update" elementType="HTTPFileArg">
+                <stringProp name="File.path">${TEST_FILES_DIR}/gateway/ddots/${GATEWAY_FILE_PREFIX}.update</stringProp>
                 <stringProp name="File.paramname">file</stringProp>
                 <stringProp name="File.mimetype">text/plain</stringProp>
               </elementProp>

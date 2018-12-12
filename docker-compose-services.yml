@@ -39,6 +39,7 @@
         - configuration/secrets/common/secrets.env
         - configuration/config/mlr-legacy-db/config.env
         - configuration/secrets/mlr-legacy-db/secrets.env
+        - configuration/local/config/common/config.env
       networks:
         mlr-it-net:
           aliases:
@@ -54,6 +55,7 @@
         - configuration/secrets/common/secrets.env
         - configuration/config/water-auth-server/config.env
         - configuration/secrets/water-auth-server/secrets.env
+        - configuration/local/config/common/config.env
       volumes:
         - "./configuration/config/certificates/water-auth-server/tomcat-ssl/ssl.crt:/home/spring/ssl.crt"
         - "./configuration/config/certificates/water-auth-server/tomcat-ssl/ssl.key:/home/spring/ssl.key"
@@ -76,6 +78,7 @@
         - configuration/secrets/common/secrets.env
         - configuration/config/mlr-legacy/config.env
         - configuration/secrets/mlr-legacy/secrets.env
+        - configuration/local/config/common/config.env
       command: "./wait-for.sh water.auth.server:8443 -t 60 -- ./wait-for.sh mlr.legacy.db:5432 -t 60 -- ./entrypoint.sh"
       volumes:
         - "./configuration/config/certificates/mlr-legacy/ssl.crt:/home/spring/ssl.crt"
@@ -100,6 +103,7 @@
         - configuration/secrets/common/secrets.env
         - configuration/config/mlr-notification/config.env
         - configuration/secrets/mlr-notification/secrets.env
+        - configuration/local/config/common/config.env
       command: "./wait-for.sh water.auth.server:8443 -t 60 -- ./entrypoint.sh"
       volumes:
         - "./configuration/config/certificates/mlr-notification/ssl.crt:/home/spring/ssl.crt"
@@ -124,6 +128,7 @@
         - configuration/secrets/common/secrets.env
         - configuration/config/mlr-legacy-transformer/config.env
         - configuration/secrets/mlr-legacy-transformer/secrets.env
+        - configuration/local/config/common/config.env
       command: "./wait-for.sh water.auth.server:8443 -t 60 -- ./entrypoint.sh"
       volumes:
         - "./configuration/config/certificates/mlr-legacy-transformer/ssl.crt:/home/python/certificates/ssl.crt"
@@ -146,6 +151,7 @@
         - configuration/secrets/common/secrets.env
         - configuration/config/mlr-wsc-file-exporter/config.env
         - configuration/secrets/mlr-wsc-file-exporter/secrets.env
+        - configuration/local/config/common/config.env
       command: "./wait-for.sh water.auth.server:8443 -t 60 -- ./entrypoint.sh"
       volumes:
         - "./configuration/config/certificates/mlr-wsc-file-exporter/ssl.crt:/home/python/certificates/ssl.crt"
@@ -168,6 +174,7 @@
         - configuration/secrets/common/secrets.env
         - configuration/config/mlr-validator/config.env
         - configuration/secrets/mlr-validator/secrets.env
+        - configuration/local/config/common/config.env
       command: "./wait-for.sh water.auth.server:8443 -t 60 -- ./entrypoint.sh"
       volumes:
         - "./configuration/config/certificates/mlr-validator/ssl.crt:/home/python/certificates/ssl.crt"
@@ -190,6 +197,7 @@
         - configuration/secrets/common/secrets.env
         - configuration/config/mlr-ddot-ingester/config.env
         - configuration/secrets/mlr-ddot-ingester/secrets.env
+        - configuration/local/config/common/config.env
       command: "./wait-for.sh water.auth.server:8443 -t 60 -- ./entrypoint.sh"
       volumes:
         - "./configuration/config/certificates/mlr-ddot-ingester/testing-ssl.crt:/home/python/certificates/ssl.crt"
@@ -212,6 +220,7 @@
         - configuration/secrets/common/secrets.env
         - configuration/config/mlr-gateway/config.env
         - configuration/secrets/mlr-gateway/secrets.env
+        - configuration/local/config/common/config.env
       command: "./wait-for.sh water.auth.server:8443 -t 60 -- ./wait-for.sh mlr.legacy.db:5432 -t 60 -- ./entrypoint.sh"
       volumes:
         - "./configuration/config/certificates/mlr-gateway/ssl.crt:/home/spring/ssl.crt"
