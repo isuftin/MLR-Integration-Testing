@@ -1,9 +1,11 @@
 #!/bin/bash
 
-OUTPUT_DIR="${OUTPUT_DIR:-`pwd`/tests/output}"
-TESTS_DIR="${TESTS_DIR:-`pwd`/tests/integrations}"
-JMETER_DOCKER_DIR="${JMETER_DOCKER_DIR:-`pwd`/jmeter-docker}"
+DATA_DIR="${DATA_DIR:-$(pwd)/tests/data}"
+OUTPUT_DIR="${OUTPUT_DIR:-$(pwd)/tests/output}"
+TESTS_DIR="${TESTS_DIR:-$(pwd)/tests/integrations}"
+JMETER_DOCKER_DIR="${JMETER_DOCKER_DIR:-$(pwd)/jmeter-docker}"
 DOCKER_NETWORK_NAME="${DOCKER_NETWORK_NAME:-mlr-it-net}"
+DOCKER_OUTPUT_DIR="/tests/output/waterauth"
 
 docker run --rm \
   --network="${DOCKER_NETWORK_NAME}" \
@@ -14,9 +16,9 @@ docker run --rm \
   jmeter-base:latest jmeter \
     -f \
     -n \
-    -e -o /tests/output/waterauth/jmeter-output/dash \
-    -j /tests/output/waterauth/jmeter-output/jmeter-waterauth.log \
-    -l /tests/output/waterauth/jmeter-output/jmeter-testing-waterauth.jtl \
-    -JJMETER_OUTPUT_PATH=/tests/output/waterauth/test-output \
+    -e -o $DOCKER_OUTPUT_DIR/jmeter-output/dash \
+    -j $DOCKER_OUTPUT_DIR/jmeter-output/jmeter-waterauth.log \
+    -l $DOCKER_OUTPUT_DIR/jmeter-output/jmeter-testing-waterauth.jtl \
+    -JJMETER_OUTPUT_PATH=$DOCKER_OUTPUT_DIR/test-output \
     -t /tests/integrations/waterauth/waterauth.jmx \
     -Rjmeter.server.1,jmeter.server.2,jmeter.server.3
