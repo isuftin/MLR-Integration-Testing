@@ -23,15 +23,26 @@ The script will first create the SSL certificates needed by NGINX to serve as an
 
 The SSL certificates created are stored in the `ssl/` subdirectory. These certificates are part of the `.gitignore` file so they are not checked in.
 
-#### Launching the services
+### Launching the services
 
-In order to launch all of the required services, ensure that the "launch_services.sh" script is executable:
+If you are using Docker Machine and your Docker engine does not run on localhost, before launching the service stack, make sure that you create and export the `DOCKER_ENGINE_IP` variable in bash, setting it to the IP address of your Docker VM. This ensures that the launch script properly sets up the mock S3 bucket also running in a Docker container by ending curl commands to it. Using the following command properly exports the variable in bash. Don't forget to substitute the name of your Docker machine in the marked portion of the command:
 
-`$ chmod +x launch_services.sh`
+```
+$ export DOCKER_ENGINE_IP=`docker-machine ip <machine name>`
+```
 
-And run it:
+Also, if you will be running the JMeter tests using the JMeter GUI instead of running the tests via a master/slave configuration with a secondary stack of JMeter containers, you will want to edit one or two other files.
 
-`$ ./launch_services.sh`
+First, if you are using Docker Machine, edit `configuration/local/local.jmeter.properties` and replace `localhost` with the IP if your Docker VM. You can get that by running `docker-machine ip <machine name>` and subtituting the name of your VM that is running the Docker engine. If you are running native Docker, you can skip this.
+
+Second, edit `configuration/local/config/common/config.env`. In this file you will want to substitute the `water.auth.server` domain with the IP of your Docker engine. This will either be localhost if not running on Docker Machine or the IP of your Docker VM. You can get that by running `docker-machine ip <machine name>` and subtituting the name of your VM that is running the Docker engine.
+
+In order to launch all of the required services, ensure that the "launch_services.sh" script is executable and run it:
+
+```
+$ chmod +x launch_services.sh`
+$ ./launch_services.sh
+```
 
 This script uses the `docker-compose-services.yml` config file to launch the MLR stack as well as two helper containers. One is a mock SMTP server that is required for the mlr-notification service to run. The other is a mock S3 bucket that is also used by MLR services.
 
@@ -128,6 +139,8 @@ Done
 
 #### Launching JMeter slave servers
 
+If you will be running JMeter tests using the JMeter GUI, you can skip this section.
+
 In order to perform the integration tests on MLR, JMeter is launched in a master/slave configuration. First, we launch three JMeter slave containers that sit and wait for the JMeter master to come online and provide instructions for testing. Once the testing has completed, the output files are provided back to master and written onto the file system. At this point, more testing may be run or the slaves may be shut down.
 
 In order to launch the JMeter slave containers, simply ensure the `launch_jmeter_servers.sh` script is executable and run it:
@@ -166,6 +179,90 @@ You may see a warning about orphan containers if you're already running the MLR 
 
 #### Running JMeter tests via JMeter GUI
 
-Once the MLR stack and the JMeter slave servers are up and running, you can run the JMeter tests via the JMeter GUI. Running via the GUI is the easiest way to visualize and edit the tests.
+Once the MLR stack and the JMeter slave servers are up and running, you can run the JMeter tests via the JMeter GUI. Running via the GUI is the easiest way to visualize and edit the current set of tests.
 
- 
+Ensure you have JMeter >= 5.0 installed on your system and from the root project directory, issue the following command:
+
+`$ jmeter -p configuration/local/local.jmeter.properties`
+
+We use this local properties file as a source for key value pairs to override the default properties in the JMeter tests. The reason is that the JMeter tests include hostnames that only make sense if running the JMeter tests from within the Docker stack network that's created when the services stack is launched. That's what we do when we run the master/slave configuration for JMeter but when running with the JMeter GUI, we end up using the IP address of the Docker engine itself (localhost or the IP address of the docker machine VM)
+
+Once the JMeter GUI is loaded, you should be able to run any of the tests included in this project.
+
+#### Running JMeter tests headless in master/slave configuration
+
+Each integration test also comes with a shell script that launches. Once you have the service stack running and healthy and you've launched the JMeter slaves, you can run the testing script for any of the included tests.
+
+For example, to run the test for the DDOT files, ensure that the script to do so is executable and then run it:
+
+```
+$ chmod +x tests/integrations/ddot/test_plan.sh
+$ tests/integrations/ddot/test_plan.sh
+Dec 12, 2018 10:15:09 PM java.util.prefs.FileSystemPreferences$1 run
+INFO: Created user preferences directory.
+Creating summariser <summary>
+Created the tree successfully using /tests/integrations/ddot/ddot.jmx
+Configuring remote engine: jmeter.server.1
+Using local port: 60000
+Configuring remote engine: jmeter.server.2
+Configuring remote engine: jmeter.server.3
+Starting remote engines
+Starting the test @ Wed Dec 12 22:15:12 UTC 2018 (1544652912143)
+Remote engines have been started
+Waiting for possible Shutdown/StopTestNow/Heapdump message on port 4445
+summary =    300 in 00:00:11 =   27.3/s Avg:    23 Min:     3 Max:   354 Err:     0 (0.00%)
+Tidying up remote @ Wed Dec 12 22:15:26 UTC 2018 (1544652926912)
+... end of run
+```
+
+What happens during the run is the shell script launches a master JMeter container, attaches it to the network that the jmeter and MLR services stack runs on, mounts necessary volumes for configuration files, input files and output directories, and runs the specified test by pushing the test out to the three JMeter slave nodes.
+
+It then waits for the tests to be completed, gathers the output, puts it into the `tests/output` directory in the project and shuts down and removes the master JMeter container.
+
+For the ddot test output, you'd go to `tests/output/ddot/jmeter-output`
+
+### TL;DR
+
+Before running any script, ensure it's executable by issuing the chmod command against it: `chmod +x <script path>`
+
+#### Working off of the USGS network
+
+- `./pull-containers.sh`
+
+#### Using JMeter GUI with Docker Machine
+
+- Figure out the IP for your Docker Machine VM via `docker-machine ip <vm name>`
+
+- Edit `configuration/local/config/common/config.env` and replace `water.auth.server` with IP of Docker VM
+
+- Edit `configuration/local/local.jmeter.properties` and replace `localhost` with IP of Docker VM
+
+- Export the `DOCKER_ENGINE_IP` variable by running `export DOCKER_ENGINE_IP=<ip of Docker VM>`
+
+- Launch MLR stack: `./launch_services.sh`
+
+- Launch jmeter: `jmeter -p configuration/local/local.jmeter.properties`
+
+#### Using JMeter GUI with native Docker
+
+- Edit `configuration/local/config/common/config.env` and replace `water.auth.server` with `localhost`
+
+- Launch MLR stack: `./launch_services.sh`
+
+- Launch jmeter: `jmeter -p configuration/local/local.jmeter.properties`
+
+#### Using Docker Master/Slave scripting
+
+- Launch MLR stack: `./launch_services.sh`
+
+- Launch JMeter Slave stack: `./launch_jmeter_servers.sh`
+
+- Run any JMeter test individually: `tests/integrations/<test name>/test_plan.sh`
+
+#### Destroying JMeter slave stack
+
+- `./destroy_jmeter_servers.sh`
+
+#### Destroying MLR stack
+
+- `./destroy_services.sh`
