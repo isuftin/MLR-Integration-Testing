@@ -29,7 +29,7 @@ for dir_key_pairs in "${dir_key_pair_arr[@]}"; do
       mkdir -p "$cert_dir"
     fi
 
-    rm "$base_dir/${cb[0]}/ssl.*"
+    rm -f "$base_dir/${cb[0]}/ssl.*"
 
     openssl genrsa -out "$cert_dir/ssl.key" 2048
     openssl req -nodes -newkey rsa:2048 -sha256 -keyout "$cert_dir/ssl.key" -out "$cert_dir/ssl.csr" -subj "/C=US/ST=Wisconsin/L=Middleon/O=US Geological Survey/OU=WMA/CN=${cb[1]}"
