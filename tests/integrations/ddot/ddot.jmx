@@ -16,37 +16,42 @@
         <collectionProp name="Arguments.arguments">
           <elementProp name="WATERAUTH_HOST" elementType="Argument">
             <stringProp name="Argument.name">WATERAUTH_HOST</stringProp>
-            <stringProp name="Argument.value">water.auth.server</stringProp>
+            <stringProp name="Argument.value">${__P(WATER_AUTH_HOST,water.auth.server)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="WATERAUTH_PORT" elementType="Argument">
             <stringProp name="Argument.name">WATERAUTH_PORT</stringProp>
-            <stringProp name="Argument.value">8443</stringProp>
+            <stringProp name="Argument.value">${__P(WATERAUTH_PORT,8443)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="SERVER_HOST" elementType="Argument">
             <stringProp name="Argument.name">SERVER_HOST</stringProp>
-            <stringProp name="Argument.value">mlr.ddot.ingester</stringProp>
+            <stringProp name="Argument.value">${__P(SERVER_HOST,mlr.ddot.ingester)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="SERVER_PORT" elementType="Argument">
             <stringProp name="Argument.name">SERVER_PORT</stringProp>
-            <stringProp name="Argument.value">6028</stringProp>
+            <stringProp name="Argument.value">${__P(SERVER_PORT,6028)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="GATEWAY_HOST" elementType="Argument">
             <stringProp name="Argument.name">GATEWAY_HOST</stringProp>
-            <stringProp name="Argument.value">mlr.gateway</stringProp>
+            <stringProp name="Argument.value">${__P(GATEWAY_HOST,mlr.gateway)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="GATEWAY_PORT" elementType="Argument">
             <stringProp name="Argument.name">GATEWAY_PORT</stringProp>
-            <stringProp name="Argument.value">6026</stringProp>
+            <stringProp name="Argument.value">${__P(GATEWAY_PORT,6026)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="JMETER_OUTPUT_PATH" elementType="Argument">
             <stringProp name="Argument.name">JMETER_OUTPUT_PATH</stringProp>
-            <stringProp name="Argument.value">tests/output/ddot/test-output</stringProp>
+            <stringProp name="Argument.value">${__P(JMETER_OUTPUT_PATH,tests/output/ddot/test-output)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="TEST_FILES_DIR" elementType="Argument">
+            <stringProp name="Argument.name">TEST_FILES_DIR</stringProp>
+            <stringProp name="Argument.value">${__P(TEST_FILES_DIR,/tests/data)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -78,8 +83,8 @@
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="DDOT Add Valid 1" enabled="true">
           <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
             <collectionProp name="HTTPFileArgs.files">
-              <elementProp name="/tests/data/ddot_files/adds/valid/d.cabuchwa.001" elementType="HTTPFileArg">
-                <stringProp name="File.path">/tests/data/ddot_files/adds/valid/d.cabuchwa.001</stringProp>
+              <elementProp name="${TEST_FILES_DIR}/ddot_files/adds/valid/d.cabuchwa.001" elementType="HTTPFileArg">
+                <stringProp name="File.path">${TEST_FILES_DIR}/ddot_files/adds/valid/d.cabuchwa.001</stringProp>
                 <stringProp name="File.paramname">file</stringProp>
                 <stringProp name="File.mimetype">text/plain</stringProp>
               </elementProp>
@@ -129,8 +134,8 @@
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="DDOT Add Valid 2" enabled="true">
           <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
             <collectionProp name="HTTPFileArgs.files">
-              <elementProp name="/tests/data/ddot_files/adds/valid/d.cabuchwa.004" elementType="HTTPFileArg">
-                <stringProp name="File.path">/tests/data/ddot_files/adds/valid/d.cabuchwa.004</stringProp>
+              <elementProp name="${TEST_FILES_DIR}/ddot_files/adds/valid/d.cabuchwa.004" elementType="HTTPFileArg">
+                <stringProp name="File.path">${TEST_FILES_DIR}/ddot_files/adds/valid/d.cabuchwa.004</stringProp>
                 <stringProp name="File.paramname">file</stringProp>
                 <stringProp name="File.mimetype">text/plain</stringProp>
               </elementProp>
@@ -180,8 +185,8 @@
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="DDOT Add Valid 3" enabled="true">
           <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
             <collectionProp name="HTTPFileArgs.files">
-              <elementProp name="/tests/data/ddot_files/adds/valid/d.cabuchwa.005" elementType="HTTPFileArg">
-                <stringProp name="File.path">/tests/data/ddot_files/adds/valid/d.cabuchwa.005</stringProp>
+              <elementProp name="${TEST_FILES_DIR}/ddot_files/adds/valid/d.cabuchwa.005" elementType="HTTPFileArg">
+                <stringProp name="File.path">${TEST_FILES_DIR}/ddot_files/adds/valid/d.cabuchwa.005</stringProp>
                 <stringProp name="File.paramname">file</stringProp>
                 <stringProp name="File.mimetype">text/plain</stringProp>
               </elementProp>
@@ -234,8 +239,8 @@
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="DDOT Add Invalid 1" enabled="true">
           <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
             <collectionProp name="HTTPFileArgs.files">
-              <elementProp name="/tests/data/ddot_files/adds/invalid/d.cabuchwa.006" elementType="HTTPFileArg">
-                <stringProp name="File.path">/tests/data/ddot_files/adds/invalid/d.cabuchwa.006</stringProp>
+              <elementProp name="${TEST_FILES_DIR}/ddot_files/adds/invalid/d.cabuchwa.006" elementType="HTTPFileArg">
+                <stringProp name="File.path">${TEST_FILES_DIR}/ddot_files/adds/invalid/d.cabuchwa.006</stringProp>
                 <stringProp name="File.paramname">file</stringProp>
                 <stringProp name="File.mimetype">text/plain</stringProp>
               </elementProp>
@@ -292,8 +297,8 @@
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="DDOT Add Invalid 2" enabled="true">
           <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
             <collectionProp name="HTTPFileArgs.files">
-              <elementProp name="/tests/data/ddot_files/adds/invalid/d.cabuchwa.007" elementType="HTTPFileArg">
-                <stringProp name="File.path">/tests/data/ddot_files/adds/invalid/d.cabuchwa.007</stringProp>
+              <elementProp name="${TEST_FILES_DIR}/ddot_files/adds/invalid/d.cabuchwa.007" elementType="HTTPFileArg">
+                <stringProp name="File.path">${TEST_FILES_DIR}/ddot_files/adds/invalid/d.cabuchwa.007</stringProp>
                 <stringProp name="File.paramname">file</stringProp>
                 <stringProp name="File.mimetype">text/plain</stringProp>
               </elementProp>
@@ -350,8 +355,8 @@
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="DDOT Modify Valid 1" enabled="true">
           <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
             <collectionProp name="HTTPFileArgs.files">
-              <elementProp name="/tests/data/ddot_files/modifies/valid/d.cabuchwa.002" elementType="HTTPFileArg">
-                <stringProp name="File.path">/tests/data/ddot_files/modifies/valid/d.cabuchwa.002</stringProp>
+              <elementProp name="${TEST_FILES_DIR}/ddot_files/modifies/valid/d.cabuchwa.002" elementType="HTTPFileArg">
+                <stringProp name="File.path">${TEST_FILES_DIR}/ddot_files/modifies/valid/d.cabuchwa.002</stringProp>
                 <stringProp name="File.paramname">file</stringProp>
                 <stringProp name="File.mimetype">text/plain</stringProp>
               </elementProp>
@@ -399,8 +404,8 @@
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="DDOT Modify Valid 2" enabled="true">
           <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
             <collectionProp name="HTTPFileArgs.files">
-              <elementProp name="/tests/data/ddot_files/modifies/valid/d.cabuchwa.003" elementType="HTTPFileArg">
-                <stringProp name="File.path">/tests/data/ddot_files/modifies/valid/d.cabuchwa.003</stringProp>
+              <elementProp name="${TEST_FILES_DIR}/ddot_files/modifies/valid/d.cabuchwa.003" elementType="HTTPFileArg">
+                <stringProp name="File.path">${TEST_FILES_DIR}/ddot_files/modifies/valid/d.cabuchwa.003</stringProp>
                 <stringProp name="File.paramname">file</stringProp>
                 <stringProp name="File.mimetype">text/plain</stringProp>
               </elementProp>
@@ -448,8 +453,8 @@
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="DDOT Modify Invalid 1" enabled="true">
           <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
             <collectionProp name="HTTPFileArgs.files">
-              <elementProp name="/tests/data/ddot_files/modifies/invalid/d.cabuchwa.008" elementType="HTTPFileArg">
-                <stringProp name="File.path">/tests/data/ddot_files/modifies/invalid/d.cabuchwa.008</stringProp>
+              <elementProp name="${TEST_FILES_DIR}/ddot_files/modifies/invalid/d.cabuchwa.008" elementType="HTTPFileArg">
+                <stringProp name="File.path">${TEST_FILES_DIR}/ddot_files/modifies/invalid/d.cabuchwa.008</stringProp>
                 <stringProp name="File.paramname">file</stringProp>
                 <stringProp name="File.mimetype">text/plain</stringProp>
               </elementProp>

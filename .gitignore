@@ -1,2 +1,4 @@
 jmeter.log
 tests/output/**
+ssl/wildcard.*
+.DS_Store

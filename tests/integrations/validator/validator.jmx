@@ -16,32 +16,47 @@
         <collectionProp name="Arguments.arguments">
           <elementProp name="SERVER_HOST" elementType="Argument">
             <stringProp name="Argument.name">SERVER_HOST</stringProp>
-            <stringProp name="Argument.value">mlr.validator</stringProp>
+            <stringProp name="Argument.value">${__P(SERVER_HOST,mlr.validator)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="SERVER_PORT" elementType="Argument">
             <stringProp name="Argument.name">SERVER_PORT</stringProp>
-            <stringProp name="Argument.value">6027</stringProp>
+            <stringProp name="Argument.value">${__P(SERVER_PORT,6027)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="LEGACY_CRU_HOST" elementType="Argument">
             <stringProp name="Argument.name">LEGACY_CRU_HOST</stringProp>
-            <stringProp name="Argument.value">mlr.legacy</stringProp>
+            <stringProp name="Argument.value">${__P(LEGACY_CRU_HOST,mlr.legacy)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="LEGACY_CRU_PORT" elementType="Argument">
             <stringProp name="Argument.name">LEGACY_CRU_PORT</stringProp>
-            <stringProp name="Argument.value">6010</stringProp>
+            <stringProp name="Argument.value">${__P(LEGACY_CRU_PORT,6010)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="DDOT_HOST" elementType="Argument">
             <stringProp name="Argument.name">DDOT_HOST</stringProp>
-            <stringProp name="Argument.value">mlr.ddot.ingester</stringProp>
+            <stringProp name="Argument.value">${__P(DDOT_HOST,mlr.ddot.ingester)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="DDOT_PORT" elementType="Argument">
             <stringProp name="Argument.name">DDOT_PORT</stringProp>
-            <stringProp name="Argument.value">6028</stringProp>
+            <stringProp name="Argument.value">${__P(DDOT_PORT,6028)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="TEST_FILES_DIR" elementType="Argument">
+            <stringProp name="Argument.name">TEST_FILES_DIR</stringProp>
+            <stringProp name="Argument.value">${__P(TEST_FILES_DIR,/tests/data)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="TRANSFORMER_HOST" elementType="Argument">
+            <stringProp name="Argument.name">TRANSFORMER_HOST</stringProp>
+            <stringProp name="Argument.value">${__P(TRANSFORMER_HOST,mlr.legacy.transformer)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="TRANSFORMER_PORT" elementType="Argument">
+            <stringProp name="Argument.name">TRANSFORMER_PORT</stringProp>
+            <stringProp name="Argument.value">6020</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -143,8 +158,8 @@
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Ddot Add Location 1" enabled="true">
           <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
             <collectionProp name="HTTPFileArgs.files">
-              <elementProp name="/tests/data/ddot_files/adds/valid/d.validator_test.001" elementType="HTTPFileArg">
-                <stringProp name="File.path">/tests/data/ddot_files/adds/valid/d.validator_test.001</stringProp>
+              <elementProp name="${TEST_FILES_DIR}/ddot_files/adds/valid/d.validator_test.001" elementType="HTTPFileArg">
+                <stringProp name="File.path">${TEST_FILES_DIR}/ddot_files/adds/valid/d.validator_test.001</stringProp>
                 <stringProp name="File.paramname">file</stringProp>
                 <stringProp name="File.mimetype">text/plain</stringProp>
               </elementProp>
@@ -195,12 +210,18 @@
             <boolProp name="JSONPostProcessor.compute_concat">true</boolProp>
           </JSONPostProcessor>
           <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="stationName Extractor" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">stationName</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$..stationName</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Ddot Update Location 1" enabled="true">
           <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
             <collectionProp name="HTTPFileArgs.files">
-              <elementProp name="/tests/data/ddot_files/modifies/valid/d.validator_test.001" elementType="HTTPFileArg">
-                <stringProp name="File.path">/tests/data/ddot_files/modifies/valid/d.validator_test.001</stringProp>
+              <elementProp name="${TEST_FILES_DIR}/ddot_files/modifies/valid/d.validator_test.001" elementType="HTTPFileArg">
+                <stringProp name="File.path">${TEST_FILES_DIR}/ddot_files/modifies/valid/d.validator_test.001</stringProp>
                 <stringProp name="File.paramname">file</stringProp>
                 <stringProp name="File.mimetype">text/plain</stringProp>
               </elementProp>
@@ -319,6 +340,69 @@
           </JSONPathAssertion>
           <hashTree/>
         </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get stationIx" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;stationName&quot;: &quot;${stationName}&quot;&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">${TRANSFORMER_HOST}</stringProp>
+          <stringProp name="HTTPSampler.port">${TRANSFORMER_PORT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">HTTPS</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/transformer/station_ix</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">true</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">Bearer ${ACCESS_TOKEN}</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">2</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="stationIx Extractor" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">stationIx</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$..stationIx</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Add Valid 1" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
@@ -326,9 +410,11 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-  &quot;ddotLocation&quot;: ${DDOT_ADD_JSON_1},&#xd;
+  &quot;ddotLocation&quot;: ${newJson},&#xd;
   &quot;existingLocation&quot;: {}&#xd;
-}</stringProp>
+}&#xd;
+&#xd;
+</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
@@ -384,6 +470,19 @@
             <boolProp name="INVERT">true</boolProp>
             <boolProp name="ISREGEX">true</boolProp>
           </JSONPathAssertion>
+          <hashTree/>
+          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="script">import groovy.json.*
+def json_req = vars.get(&apos;DDOT_ADD_JSON_1&apos;)
+def json = new JsonSlurper().parseText(json_req)
+json &lt;&lt; [stationIx: vars.get(&apos;stationIx&apos;)]
+
+vars.put(&apos;newJson&apos;, JsonOutput.toJson(json))</stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+          </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Update Valid 1" enabled="true">

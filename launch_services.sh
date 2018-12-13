@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # Useful for environments where the Docker engine is not running on the host
-# (like Docker Machine)
+# (like Docker Machine). If you are running Docker natively, don't worry about
+# this
 DOCKER_ENGINE_IP="${DOCKER_ENGINE_IP:-127.0.0.1}"
 
 SERVICE_NAMES="mlr-gateway \
@@ -32,17 +33,18 @@ create_s3_bucket () {
 
 echo "Launching MLR services..."
 {
-  EXIT_CODE=$(launch_services)
+  launch_services
+  EXIT_CODE=$?
 
-  if [[ $EXIT_CODE -ne 0 ]]; then
+  if [ $EXIT_CODE -ne 0 ]; then
     echo "Could not launch MLR services"
     destroy_services
     exit $EXIT_CODE
   fi
 
   HEALTHY_SERVICES="$(get_healthy_services)"
-  read -r -a SERVICE_NAMES_ARRAY <<< $SERVICE_NAMES
-  read -d '' -r -a HEALTHY_SERVICES_ARRAY <<< $HEALTHY_SERVICES
+  read -r -a SERVICE_NAMES_ARRAY <<< "$SERVICE_NAMES"
+  read -d '' -r -a HEALTHY_SERVICES_ARRAY <<< "$HEALTHY_SERVICES"
   count=1
   limit=240
   until [[ ${#HEALTHY_SERVICES_ARRAY[@]} -eq ${#SERVICE_NAMES_ARRAY[@]} ]]; do
@@ -70,16 +72,17 @@ echo "Launching MLR services..."
 
     # Update the healthy services
     HEALTHY_SERVICES="$(get_healthy_services)"
-    read -d '' -r -a HEALTHY_SERVICES_ARRAY <<< $HEALTHY_SERVICES
+    read -d '' -r -a HEALTHY_SERVICES_ARRAY <<< "$HEALTHY_SERVICES"
     echo "Services still not healthy: ${UNHEALTHY_SERVICES_ARRAY[*]}"
 
   done
 
   echo "All services healthy: ${HEALTHY_SERVICES_ARRAY[*]}"
   echo "Creating test s3 bucket..."
-  EXIT_CODE=$(create_s3_bucket)
+  create_s3_bucket
+  EXIT_CODE=$?
 
-  if [[ $EXIT_CODE -ne 0 ]]; then
+  if [ $EXIT_CODE -ne 0 ]; then
     echo "Could not create S3 bucket"
     destroy_services
     exit $EXIT_CODE
@@ -88,7 +91,7 @@ echo "Launching MLR services..."
   echo "Bucket created successfully"
 
   exit 0
-} || {
+  } || {
   echo "Something went horribly wrong"
   destroy_services
   exit 1

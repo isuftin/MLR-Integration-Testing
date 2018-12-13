@@ -10,9 +10,10 @@ destroy_servers () {
 
 echo "Launching JMeter Servers"
 {
-  EXIT_CODE=$(launch_servers)
+  launch_servers
+  EXIT_CODE=$?
 
-  if [[ $EXIT_CODE -ne 0 ]]; then
+  if [ $EXIT_CODE -ne 0 ]; then
     echo "Could not launch JMeter servers"
     destroy_servers
     exit $EXIT_CODE
