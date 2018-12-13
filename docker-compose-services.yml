@@ -62,7 +62,7 @@
         - "./configuration/config/certificates/water-auth-server/oauth2/ssl.crt:/home/spring/oauth-wildcard-sign.crt"
         - "./configuration/config/certificates/water-auth-server/oauth2/ssl.key:/home/spring/oauth-wildcard-sign.key"
         - "./configuration/config/certificates/water-auth-server/saml/ssl.crt:/home/spring/saml-wildcard-sign.crt"
-        - "./configuration/config/certificates/water-auth-server/saml/sssl.key:/home/spring/saml-wildcard-sign.key"
+        - "./configuration/config/certificates/water-auth-server/saml/ssl.key:/home/spring/saml-wildcard-sign.key"
       networks:
         mlr-it-net:
           aliases:

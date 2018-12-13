@@ -37,6 +37,12 @@ First, if you are using Docker Machine, edit `configuration/local/local.jmeter.p
 
 Second, edit `configuration/local/config/common/config.env`. In this file you will want to substitute the `water.auth.server` domain with the IP of your Docker engine. This will either be localhost if not running on Docker Machine or the IP of your Docker VM. You can get that by running `docker-machine ip <machine name>` and subtituting the name of your VM that is running the Docker engine.
 
+Also, before launching the services, you will want to generate SSL certificates that the services use. If you've already run the script to pull the containers from Artifactory, you won't need to do this here. Otherwise:
+
+```
+$ chmod +x ./create_certificates.sh && ./create_certificates.sh
+```
+
 In order to launch all of the required services, ensure that the "launch_services.sh" script is executable and run it:
 
 ```
@@ -224,6 +230,10 @@ For the ddot test output, you'd go to `tests/output/ddot/jmeter-output`
 ### TL;DR
 
 Before running any script, ensure it's executable by issuing the chmod command against it: `chmod +x <script path>`
+
+#### Create necessary SSL certificates used in this project
+
+- `chmod +x create_certificates.sh && ./create_certificates.sh`
 
 #### Working off of the USGS network
 
