@@ -59,10 +59,10 @@
       volumes:
         - "./configuration/config/certificates/water-auth-server/tomcat-ssl/ssl.crt:/home/spring/ssl.crt"
         - "./configuration/config/certificates/water-auth-server/tomcat-ssl/ssl.key:/home/spring/ssl.key"
-        - "./configuration/config/certificates/water-auth-server/oauth2/oauth-wildcard-dev.crt:/home/spring/oauth-wildcard-sign.crt"
-        - "./configuration/config/certificates/water-auth-server/oauth2/oauth-wildcard-dev.key:/home/spring/oauth-wildcard-sign.key"
-        - "./configuration/config/certificates/water-auth-server/saml/saml-wildcard-dev.crt:/home/spring/saml-wildcard-sign.crt"
-        - "./configuration/config/certificates/water-auth-server/saml/saml-wildcard-dev.key:/home/spring/saml-wildcard-sign.key"
+        - "./configuration/config/certificates/water-auth-server/oauth2/ssl.crt:/home/spring/oauth-wildcard-sign.crt"
+        - "./configuration/config/certificates/water-auth-server/oauth2/ssl.key:/home/spring/oauth-wildcard-sign.key"
+        - "./configuration/config/certificates/water-auth-server/saml/ssl.crt:/home/spring/saml-wildcard-sign.crt"
+        - "./configuration/config/certificates/water-auth-server/saml/sssl.key:/home/spring/saml-wildcard-sign.key"
       networks:
         mlr-it-net:
           aliases:
@@ -83,7 +83,7 @@
       volumes:
         - "./configuration/config/certificates/mlr-legacy/ssl.crt:/home/spring/ssl.crt"
         - "./configuration/config/certificates/mlr-legacy/ssl.key:/home/spring/ssl.key"
-        - "./configuration/config/certificates/wildcard.crt:/certificates/wildcard-ssl.crt"
+        - "./configuration/config/certificates/wildcard/ssl.crt:/certificates/wildcard-ssl.crt"
         - "./configuration/config/certificates/water-auth-server/tomcat-ssl/ssl.crt:/certificates/tomcat-ssl.crt"
       networks:
         mlr-it-net:
@@ -108,7 +108,7 @@
       volumes:
         - "./configuration/config/certificates/mlr-notification/ssl.crt:/home/spring/ssl.crt"
         - "./configuration/config/certificates/mlr-notification/ssl.key:/home/spring/ssl.key"
-        - "./configuration/config/certificates/wildcard.crt:/certificates/wildcard-ssl.crt"
+        - "./configuration/config/certificates/wildcard/ssl.crt:/certificates/wildcard-ssl.crt"
         - "./configuration/config/certificates/water-auth-server/tomcat-ssl/ssl.crt:/certificates/tomcat-ssl.crt"
       networks:
         mlr-it-net:
@@ -133,7 +133,7 @@
       volumes:
         - "./configuration/config/certificates/mlr-legacy-transformer/ssl.crt:/home/python/certificates/ssl.crt"
         - "./configuration/config/certificates/mlr-legacy-transformer/ssl.key:/home/python/certificates/ssl.key"
-        - "./configuration/config/certificates/wildcard.crt:/home/python/certificates/wildcard-ssl.crt"
+        - "./configuration/config/certificates/wildcard/ssl.crt:/home/python/certificates/wildcard-ssl.crt"
         - "./configuration/config/certificates/water-auth-server/tomcat-ssl/ssl.crt:/home/python/certificates/tomcat-ssl.crt"
       networks:
         mlr-it-net:
@@ -156,7 +156,7 @@
       volumes:
         - "./configuration/config/certificates/mlr-wsc-file-exporter/ssl.crt:/home/python/certificates/ssl.crt"
         - "./configuration/config/certificates/mlr-wsc-file-exporter/ssl.key:/home/python/certificates/ssl.key"
-        - "./configuration/config/certificates/wildcard.crt:/home/python/certificates/wildcard-ssl.crt"
+        - "./configuration/config/certificates/wildcard/ssl.crt:/home/python/certificates/wildcard-ssl.crt"
         - "./configuration/config/certificates/water-auth-server/tomcat-ssl/ssl.crt:/home/python/certificates/tomcat-ssl.crt"
       networks:
         mlr-it-net:
@@ -179,7 +179,7 @@
       volumes:
         - "./configuration/config/certificates/mlr-validator/ssl.crt:/home/python/certificates/ssl.crt"
         - "./configuration/config/certificates/mlr-validator/ssl.key:/home/python/certificates/ssl.key"
-        - "./configuration/config/certificates/wildcard.crt:/home/python/certificates/wildcard-ssl.crt"
+        - "./configuration/config/certificates/wildcard/ssl.crt:/home/python/certificates/wildcard-ssl.crt"
         - "./configuration/config/certificates/water-auth-server/tomcat-ssl/ssl.crt:/home/python/certificates/tomcat-ssl.crt"
       networks:
         mlr-it-net:
@@ -200,9 +200,9 @@
         - configuration/local/config/common/config.env
       command: "./wait-for.sh water.auth.server:8443 -t 60 -- ./entrypoint.sh"
       volumes:
-        - "./configuration/config/certificates/mlr-ddot-ingester/testing-ssl.crt:/home/python/certificates/ssl.crt"
-        - "./configuration/config/certificates/mlr-ddot-ingester/testing-ssl.key:/home/python/certificates/ssl.key"
-        - "./configuration/config/certificates/wildcard.crt:/home/python/certificates/wildcard-ssl.crt"
+        - "./configuration/config/certificates/mlr-ddot-ingester/ssl.crt:/home/python/certificates/ssl.crt"
+        - "./configuration/config/certificates/mlr-ddot-ingester/ssl.key:/home/python/certificates/ssl.key"
+        - "./configuration/config/certificates/wildcard/ssl.crt:/home/python/certificates/wildcard-ssl.crt"
         - "./configuration/config/certificates/water-auth-server/tomcat-ssl/ssl.crt:/home/python/certificates/tomcat-ssl.crt"
       networks:
         mlr-it-net:
@@ -225,9 +225,9 @@
       volumes:
         - "./configuration/config/certificates/mlr-gateway/ssl.crt:/home/spring/ssl.crt"
         - "./configuration/config/certificates/mlr-gateway/ssl.key:/home/spring/ssl.key"
-        - "./configuration/config/certificates/wildcard.crt:/certificates/wildcard-ssl.crt"
+        - "./configuration/config/certificates/wildcard/ssl.crt:/certificates/wildcard-ssl.crt"
         - "./configuration/config/certificates/mlr-legacy-transformer/ssl.crt:/certificates/mlr-legacy-transformer-ssl.crt"
-        - "./configuration/config/certificates/mlr-ddot-ingester/testing-ssl.crt:/certificates/mlr-ddot-ingester-ssl.crt"
+        - "./configuration/config/certificates/mlr-ddot-ingester/ssl.crt:/certificates/mlr-ddot-ingester-ssl.crt"
         - "./configuration/config/certificates/mlr-validator/ssl.crt:/certificates/mlr-validator-ssl.crt"
         - "./configuration/config/certificates/mlr-legacy/ssl.crt:/certificates/mlr-legacy-ssl.crt"
         - "./configuration/config/certificates/mlr-wsc-file-exporter/ssl.crt:/certificates/mlr-wsc-file-exporter-ssl.crt"

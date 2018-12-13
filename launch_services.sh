@@ -5,6 +5,8 @@
 # this
 DOCKER_ENGINE_IP="${DOCKER_ENGINE_IP:-127.0.0.1}"
 
+"$DIR/create_certificates.sh"
+
 SERVICE_NAMES="mlr-gateway \
   mlr-legacy \
   mlr-notification \
