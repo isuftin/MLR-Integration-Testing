@@ -2,6 +2,12 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 base_dir="$DIR/configuration/config/certificates"
+# The following array contains pairs of configuration
+# The first item dictates the directory to place the SSL certificate. From the root
+# of the project, this will be configuration/config/certificates/<dir name>
+#
+# The second item is the domain name to make for the certificate. Using "*" creates
+# a wildcard certificate
 dir_key_pair_arr=(
   "mlr-ddot-ingester,mlr.ddot.ingester"
   "mlr-gateway,mlr.gateway"
