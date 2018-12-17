@@ -2,15 +2,17 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
-mkdir -p "$DIR/ssl" || true
-
-rm -f "$DIR/ssl/wildcard.*" || true
-
-chmod +x "$DIR/create_certificates.sh"
-
 "$DIR/create_certificates.sh"
 
-docker run --rm -d -p 8444:443 -p 8080:80 -v "$DIR/.travis/nginx.conf:/etc/nginx/nginx.conf" -v "$DIR/ssl/wildcard.crt:/etc/nginx/wildcard.crt" -v "$DIR/ssl/wildcard.key:/etc/nginx/wildcard.key" --name nginx nginx:latest
+docker run --rm \
+  -d \
+  -p 8444:443 \
+  -p 8080:80 \
+  -v "$DIR/.travis/nginx.conf:/etc/nginx/nginx.conf" \
+  -v "$DIR/configuration/config/certificates/wildcard/ssl.crt:/etc/nginx/wildcard.crt" \
+  -v "$DIR/configuration/config/certificates/wildcard/ssl.key:/etc/nginx/wildcard.key" \
+  --name nginx \
+  nginx:latest
 
 # Wait for NGINX to start
 sleep 5
@@ -18,7 +20,6 @@ sleep 5
 NGINX_ADDRESS=${NGINX_ADDRESS:-localhost}
 
 declare -a IMAGES=(
-  "mlr-python-base-docker:latest"
   "water_auth_server:latest"
   "mlr/mlr-legacy-db:latest"
   "mlr/mlr-legacy:latest"
