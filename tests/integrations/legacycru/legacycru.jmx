@@ -633,7 +633,7 @@
           </ResponseAssertion>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Post Monitoring Location Success Test 2" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Post Monitoring Location Fail Test 2" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
@@ -645,6 +645,122 @@
   &quot;siteNumber&quot;: &quot;${NEW_SITE_NUMBER}&quot;,&#xd;
   &quot;stationName&quot;: &quot;TEST${NEW_SITE_NUMBER}&quot;,&#xd;
   &quot;stationIx&quot;: &quot;TEST${NEW_SITE_NUMBER}&quot;,&#xd;
+  &quot;siteTypeCode&quot;: &quot;ST&quot;,&#xd;
+  &quot;decimalLatitude&quot;: &quot;43.02388888888889&quot;,&#xd;
+  &quot;decimalLongitude&quot;: &quot;-88.0625&quot;,&#xd;
+  &quot;latitude&quot;: &quot; 430126    &quot;,&#xd;
+  &quot;longitude&quot;: &quot; 0880345    &quot;,&#xd;
+  &quot;coordinateAccuracyCode&quot;: &quot;5&quot;,&#xd;
+  &quot;coordinateDatumCode&quot;: &quot;NAD83     &quot;,&#xd;
+  &quot;coordinateMethodCode&quot;: &quot;N&quot;,&#xd;
+  &quot;altitude&quot;: &quot;     720&quot;,&#xd;
+  &quot;altitudeDatumCode&quot;: &quot;NAVD88    &quot;,&#xd;
+  &quot;altitudeMethodCode&quot;: &quot;N&quot;,&#xd;
+  &quot;altitudeAccuracyValue&quot;: &quot;  5&quot;,&#xd;
+  &quot;districtCode&quot;: &quot;55 &quot;,&#xd;
+  &quot;countryCode&quot;: &quot;US&quot;,&#xd;
+  &quot;stateFipsCode&quot;: &quot;55&quot;,&#xd;
+  &quot;countyCode&quot;: &quot;079&quot;,&#xd;
+  &quot;minorCivilDivisionCode&quot;: null,&#xd;
+  &quot;hydrologicUnitCode&quot;: &quot;040400030404&quot;,&#xd;
+  &quot;basinCode&quot;: &quot;  &quot;,&#xd;
+  &quot;nationalAquiferCode&quot;: &quot;          &quot;,&#xd;
+  &quot;aquiferCode&quot;: &quot;        &quot;,&#xd;
+  &quot;aquiferTypeCode&quot;: &quot; &quot;,&#xd;
+  &quot;agencyUseCode&quot;: &quot;A&quot;,&#xd;
+  &quot;dataReliabilityCode&quot;: &quot;C&quot;,&#xd;
+  &quot;landNet&quot;: &quot;SESENWS31 T7N   R21E  4&quot;,&#xd;
+  &quot;mapName&quot;: &quot;WAUWATOSA&quot;,&#xd;
+  &quot;mapScale&quot;: &quot;  24000&quot;,&#xd;
+  &quot;nationalWaterUseCode&quot;: &quot;  &quot;,&#xd;
+  &quot;primaryUseOfSite&quot;: &quot; &quot;,&#xd;
+  &quot;secondaryUseOfSite&quot;: &quot; &quot;,&#xd;
+  &quot;tertiaryUseOfSiteCode&quot;: &quot; &quot;,&#xd;
+  &quot;primaryUseOfWaterCode&quot;: &quot; &quot;,&#xd;
+  &quot;secondaryUseOfWaterCode&quot;: &quot; &quot;,&#xd;
+  &quot;tertiaryUseOfWaterCode&quot;: &quot; &quot;,&#xd;
+  &quot;topographicCode&quot;: &quot;C&quot;,&#xd;
+  &quot;dataTypesCode&quot;: &quot;ANNANNNNNNNNNNNNNNNNNNNNNNNNNA&quot;,&#xd;
+  &quot;instrumentsCode&quot;: &quot;NNNYNNNNNYNYNNNNYNNNNNNNNNNNNN&quot;,&#xd;
+  &quot;contributingDrainageArea&quot;: &quot;        &quot;,&#xd;
+  &quot;drainageArea&quot;: &quot;        &quot;,&#xd;
+  &quot;firstConstructionDate&quot;: &quot;        &quot;,&#xd;
+  &quot;siteEstablishmentDate&quot;: &quot;        &quot;,&#xd;
+  &quot;holeDepth&quot;: &quot;        &quot;,&#xd;
+  &quot;wellDepth&quot;: &quot;        &quot;,&#xd;
+  &quot;sourceOfDepthCode&quot;: &quot; &quot;,&#xd;
+  &quot;projectNumber&quot;: &quot;GC18NK-BQY68&quot;,&#xd;
+  &quot;timeZoneCode&quot;: &quot;CST  &quot;,&#xd;
+  &quot;daylightSavingsTimeFlag&quot;: &quot;Y&quot;,&#xd;
+  &quot;remarks&quot;: &quot; &quot;,&#xd;
+  &quot;siteWebReadyCode&quot;: &quot;Y&quot;,&#xd;
+  &quot;gwFileCode&quot;: &quot;                    &quot;,&#xd;
+  &quot;created&quot;: &quot;2018-10-05 19:39:03&quot;,&#xd;
+  &quot;createdBy&quot;: &quot;user    &quot;,&#xd;
+  &quot;updated&quot;: &quot;2018-10-05 19:39:03&quot;,&#xd;
+  &quot;updatedBy&quot;: &quot;user    &quot;&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">${SERVER_HOST}</stringProp>
+          <stringProp name="HTTPSampler.port">${SERVER_PORT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/monitoringLocations</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">true</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="TestPlan.comments">(StationIX Duplicate Validation)</stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">Bearer ${ACCESS_TOKEN}</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="51514">406</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">true</boolProp>
+            <intProp name="Assertion.test_type">2</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Post Monitoring Location Success Test 2" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;id&quot;: null,&#xd;
+  &quot;agencyCode&quot;: &quot;N${NEW_AGENCY}&quot;,&#xd;
+  &quot;siteNumber&quot;: &quot;${NEW_SITE_NUMBER}&quot;,&#xd;
+  &quot;stationName&quot;: &quot;TEST${NEW_SITE_NUMBER}&quot;,&#xd;
+  &quot;stationIx&quot;: &quot;TESTN${NEW_SITE_NUMBER}&quot;,&#xd;
   &quot;siteTypeCode&quot;: &quot;ST&quot;,&#xd;
   &quot;decimalLatitude&quot;: &quot;43.02388888888889&quot;,&#xd;
   &quot;decimalLongitude&quot;: &quot;-88.0625&quot;,&#xd;
@@ -758,7 +874,7 @@
           <hashTree/>
           <JSONPathAssertion guiclass="JSONPathAssertionGui" testclass="JSONPathAssertion" testname="JSON Assertion" enabled="true">
             <stringProp name="JSON_PATH">$.stationIx</stringProp>
-            <stringProp name="EXPECTED_VALUE">TEST${NEW_SITE_NUMBER}</stringProp>
+            <stringProp name="EXPECTED_VALUE">TESTN${NEW_SITE_NUMBER}</stringProp>
             <boolProp name="JSONVALIDATION">true</boolProp>
             <boolProp name="EXPECT_NULL">false</boolProp>
             <boolProp name="INVERT">false</boolProp>
