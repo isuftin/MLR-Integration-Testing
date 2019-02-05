@@ -35,7 +35,6 @@ jobs:
         - chmod +x ./.travis/load_images.sh && ./.travis/load_images.sh
         - chmod +x pull-containers.sh && ./pull-containers.sh
         - chmod +x ./.travis/save_images.sh && ./.travis/save_images.sh
-        - docker save cidasdpdasartip.cr.usgs.gov:8447/water_auth_server:latest $HOME/docker/water_auth_server.tar
     - stage: test
       before_install:
         - sudo apt-get update
