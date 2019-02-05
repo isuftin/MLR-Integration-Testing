@@ -10,12 +10,18 @@ env:
 services:
   - docker
 
+jobs:
+  include:
+    - stage: build
+      script:
+        - echo "HELLO"
+
 before_cache:
   # Save tagged docker images
   - mkdir -p $HOME/docker
   - docker pull nginx
-  - docker save $(docker images -q) -o $HOME/docker/images.tar
-  
+  - docker save nginx:latest -o $HOME/docker/nginx.tar
+
 before_install:
   - sudo apt-get update
   - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
