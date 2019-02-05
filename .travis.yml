@@ -1,51 +1,58 @@
-sudo: required
 
-env:
-  matrix:
-    - TEST_NAME='waterauth'
-    - TEST_NAME='gateway'
-  global:
-    - DOCKER_COMPOSE_VERSION=1.23.2
+---
+  sudo: required
 
-addons:
-  apt:
-    packages:
-      - docker-ce
+  env:
+    matrix:
+      - TEST_NAME='waterauth'
+      - TEST_NAME='gateway'
+    global:
+      - DOCKER_COMPOSE_VERSION=1.23.2
 
-services:
-  - docker
+  addons:
+    apt:
+      packages:
+        - docker-ce
 
-cache:
-  bundler: true
-  directories:
-    - $HOME/docker
+  services:
+    - docker
 
-stages:
-  - precache
-  - test
+  cache:
+    bundler: true
+    directories:
+      - $HOME/docker
 
-jobs:
-  include:
-    - stage: precache
-      before_cache:
-        # Save tagged docker images
-        - mkdir -p $HOME/docker
-        - docker pull nginx
-        - docker save nginx:latest -o $HOME/docker/nginx.tar
-      script:
-        - echo "HELLO"
-      before_install:
-        - sudo apt-get update
-        - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
-        - chmod +x docker-compose
-        - sudo mv docker-compose /usr/local/bin
-        - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
-        - chmod +x *.sh
-        - sudo service postgresql stop
-        - while sudo lsof -Pi :5432 -sTCP:LISTEN -t; do sleep 1; done
-        - if [[ -d $HOME/docker ]]; then ls $HOME/docker/*.tar.gz | xargs -I {file} sh -c "zcat {file} | docker load"; fi
-      install:
-        - docker pull nginx:latest
-    - stage: test
-      script:
-        - docker image ls
+  stages:
+    - precache
+    - test
+
+  jobs:
+    include:
+      - stage: precache
+        before_cache:
+          - mkdir -p $HOME/docker
+        before_install:
+          - sudo apt-get update
+          - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+          - chmod +x docker-compose
+          - sudo mv docker-compose /usr/local/bin
+          - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
+        script:
+          - echo "HELLO"
+        install:
+          - chmod +x pull-containers.sh && ./pull-containers.sh
+          - docker save cidasdpdasartip.cr.usgs.gov:8447/water_auth_server:latest $HOME/docker/water_auth_server.tar
+      - stage: test
+        before_install:
+          - sudo apt-get update
+          - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+          - chmod +x docker-compose
+          - sudo mv docker-compose /usr/local/bin
+          - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
+          - chmod +x *.sh
+          - sudo service postgresql stop
+          - while sudo lsof -Pi :5432 -sTCP:LISTEN -t; do sleep 1; done
+        install:
+          - docker load --input $HOME/docker/water_auth_server.tar
+        script:
+          - docker image ls
