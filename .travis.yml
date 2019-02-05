@@ -15,9 +15,20 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
   - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
-  - chmod +x pull-containers.sh && ./pull-containers.sh
+  - chmod +x *.sh
+
 install:
-  - echo "done"
+  - ./pull-containers.sh
 
 script:
-  - echo "Done"
+  - ./launch_services.sh
+  - ./launch_jmeter_servers.sh
+  - for svc in waterauth gateway ddot legacycru notification transformer validator wscfileexporter; do
+      echo "Testing $svc"
+      chmod +x "./tests/integrations/${svc}/test_plan.sh"
+      ./tests/integrations/${svc}/test_plan.sh
+      echo "Reding results for $svc"
+      ./read_results.sh $svc
+      ./destroy_services.sh
+      ./launch_services.sh
+    done
