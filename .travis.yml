@@ -15,12 +15,6 @@ addons:
 services:
   - docker
 
-before_cache:
-  # Save tagged docker images
-  - mkdir -p $HOME/docker
-  - docker pull nginx
-  - docker save nginx:latest -o $HOME/docker/nginx.tar
-
 cache:
   bundler: true
   directories:
@@ -29,6 +23,11 @@ cache:
 jobs:
   include:
     - stage: prepare cache
+      before_cache:
+        # Save tagged docker images
+        - mkdir -p $HOME/docker
+        - docker pull nginx
+        - docker save nginx:latest -o $HOME/docker/nginx.tar
       script:
         - echo "HELLO"
       before_install:
@@ -43,6 +42,6 @@ jobs:
         - if [[ -d $HOME/docker ]]; then ls $HOME/docker/*.tar.gz | xargs -I {file} sh -c "zcat {file} | docker load"; fi
       install:
         - docker pull nginx:latest
-
-script:
-  - docker image ls
+      - stage: test
+        script:
+          - docker image ls
