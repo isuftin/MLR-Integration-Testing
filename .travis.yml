@@ -20,9 +20,13 @@ cache:
   directories:
     - $HOME/docker
 
+stages:
+  - precache
+  - test
+
 jobs:
   include:
-    - stage: prepare cache
+    - stage: precache
       before_cache:
         # Save tagged docker images
         - mkdir -p $HOME/docker
