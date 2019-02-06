@@ -1,6 +1,6 @@
 sudo: required
 
-language: generic
+language: bash
 
 env:
   matrix:
@@ -14,11 +14,6 @@ env:
     - TEST_NAME='wscfileexporter'
   global:
     - DOCKER_COMPOSE_VERSION=1.23.2
-
-addons:
-  apt:
-    packages:
-      - docker-ce
 
 services:
   - docker
@@ -42,19 +37,17 @@ jobs:
         - chmod +x ./pull-containers.sh && ./pull-containers.sh
         - chmod +x ./.travis/save_images.sh && ./.travis/save_images.sh
     - stage: test
-      before_install:
-        - sudo apt-get update
+      install:
         - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
         - chmod +x docker-compose
         - sudo mv docker-compose /usr/local/bin
         - sudo service postgresql stop
         - while sudo lsof -Pi :5432 -sTCP:LISTEN -t; do sleep 1; done
-      install:
         - chmod +x *.sh
         - chmod +x ./.travis/load_images.sh && ./.travis/load_images.sh
         - chmod +x "./tests/integrations/${TEST_NAME}/test_plan.sh";
       script:
         - echo "Testing ${TEST_NAME}"
         - ./tests/integrations/${TEST_NAME}/test_plan.sh
-        - echo "Reding results for ${TEST_NAME}"
+        - echo "Reading results for ${TEST_NAME}"
         - ./read_results.sh $TEST_NAME
