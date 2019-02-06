@@ -6,6 +6,12 @@ env:
   matrix:
     - TEST_NAME='waterauth'
     - TEST_NAME='gateway'
+    - TEST_NAME='ddot'
+    - TEST_NAME='legacycru'
+    - TEST_NAME='notification'
+    - TEST_NAME='transformer'
+    - TEST_NAME='validator'
+    - TEST_NAME='wscfileexporter'
   global:
     - DOCKER_COMPOSE_VERSION=1.23.2
 
@@ -31,11 +37,9 @@ jobs:
     - stage: precache
       before_cache:
         - mkdir -p $HOME/docker
-      before_install:
-        - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
       install:
         - chmod +x ./.travis/load_images.sh && ./.travis/load_images.sh
-        - chmod +x pull-containers.sh && ./pull-containers.sh
+        - chmod +x ./pull-containers.sh && ./pull-containers.sh
         - chmod +x ./.travis/save_images.sh && ./.travis/save_images.sh
     - stage: test
       before_install:
@@ -43,11 +47,14 @@ jobs:
         - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
         - chmod +x docker-compose
         - sudo mv docker-compose /usr/local/bin
-        - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
-        - chmod +x *.sh
         - sudo service postgresql stop
         - while sudo lsof -Pi :5432 -sTCP:LISTEN -t; do sleep 1; done
       install:
+        - chmod +x *.sh
         - chmod +x ./.travis/load_images.sh && ./.travis/load_images.sh
+        - chmod +x "./tests/integrations/${TEST_NAME}/test_plan.sh";
       script:
-        - docker image ls
+        - echo "Testing ${TEST_NAME}"
+        - ./tests/integrations/${TEST_NAME}/test_plan.sh
+        - echo "Reding results for ${TEST_NAME}"
+        - ./read_results.sh $TEST_NAME
