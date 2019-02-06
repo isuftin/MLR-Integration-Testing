@@ -33,6 +33,9 @@ jobs:
       before_cache:
         - mkdir -p $HOME/docker
       install:
+        - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+        - chmod +x docker-compose
+        - sudo mv docker-compose /usr/local/bin
         - chmod +x ./.travis/load_images.sh && ./.travis/load_images.sh
         - chmod +x ./pull-containers.sh && ./pull-containers.sh
         - chmod +x ./.travis/save_images.sh && ./.travis/save_images.sh
