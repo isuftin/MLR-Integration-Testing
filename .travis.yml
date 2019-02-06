@@ -30,29 +30,29 @@ stages:
 jobs:
   include:
     - stage: precache
-      before_cache:
-        - mkdir -p $HOME/docker
       install:
+        - mkdir -p $HOME/docker
         - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
         - chmod +x docker-compose
         - sudo mv docker-compose /usr/local/bin
+      script:
         - chmod +x ./.travis/load_images.sh && ./.travis/load_images.sh
         - chmod +x ./pull-containers.sh && ./pull-containers.sh
         - chmod +x ./.travis/save_images.sh && ./.travis/save_images.sh
-    - stage: test
-      before_install:
-        - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
-        - chmod +x docker-compose
-        - sudo mv docker-compose /usr/local/bin
-      install:
-        - chmod +x *.sh
-        - chmod +x ./.travis/load_images.sh && ./.travis/load_images.sh
-        - chmod +x "./tests/integrations/${TEST_NAME}/test_plan.sh";
-      script:
-        - echo "Launching services"
-        - ./launch_services.sh
-        - ./launch_jmeter_servers.sh
-        - echo "Testing ${TEST_NAME}"
-        - ./tests/integrations/${TEST_NAME}/test_plan.sh
-        - echo "Reading results for ${TEST_NAME}"
-        - ./read_results.sh $TEST_NAME
+
+before_install:
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+install:
+  - chmod +x *.sh
+  - chmod +x ./.travis/load_images.sh && ./.travis/load_images.sh
+  - chmod +x "./tests/integrations/${TEST_NAME}/test_plan.sh";
+script:
+  - echo "Launching services"
+  - ./launch_services.sh
+  - ./launch_jmeter_servers.sh
+  - echo "Testing ${TEST_NAME}"
+  - ./tests/integrations/${TEST_NAME}/test_plan.sh
+  - echo "Reading results for ${TEST_NAME}"
+  - ./read_results.sh $TEST_NAME
