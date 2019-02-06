@@ -8,35 +8,35 @@ services:
 cache:
   directories:
     - $HOME/docker
+
 env:
-  - TEST_NAME=waterauth
-  - TEST_NAME=gateway
-  - TEST_NAME=ddot
-  - TEST_NAME=legacycru
-  - TEST_NAME=notification
-  - TEST_NAME=transformer
-  - TEST_NAME=validator
-  - TEST_NAME=wscfileexporter
+  global:
+    - DOCKER_COMPOSE_VERSION=1.23.2
+  matrix:
+    - TEST_NAME=waterauth
+    - TEST_NAME=gateway
+    - TEST_NAME=ddot
+    - TEST_NAME=legacycru
+    - TEST_NAME=notification
+    - TEST_NAME=transformer
+    - TEST_NAME=validator
+    - TEST_NAME=wscfileexporter
 
 stages:
   - precache
   - test
 
-
+before_install:
+  - echo "BEFORE INSTALL IN TEST"
+install:
+  - echo "INSTALL IN TEST"
+script:
+  - echo "SCRIPT IN TEST"
 
 jobs:
   include:
-    - stage: test
-      before_install:
-        - echo "BEFORE INSTALL IN TEST"
-      install:
-        - echo "INSTALL IN TEST"
-      script:
-        - echo "SCRIPT IN TEST"
     - stage: precache
-      before_cache:
-        - echo "BEFORE CACHE IN PRECACHE"
-        - mkdir -p $HOME/docker
+      before_install: true
       install:
         - echo "INSTALL IN PRECACHE"
         - echo $(date) > $HOME/docker/date.txt
