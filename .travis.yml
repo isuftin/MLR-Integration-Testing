@@ -25,18 +25,23 @@ stages:
   - precache
   - test
 
-before_install:
-  - echo "BEFORE INSTALL"
-install:
-  - echo "INSTALL"
-script:
-  - echo "SCRIPT"
+
 
 jobs:
   include:
+    - stage: test
+      before_install:
+        - echo "BEFORE INSTALL"
+      install:
+        - echo "INSTALL"
+      script:
+        - echo "SCRIPT"
     - stage: precache
       before_cache:
+        - echo "BEFORE CACHE"
         - mkdir -p $HOME/docker
       install:
         - echo "INSTALL"
         - echo $(date) > $HOME/docker/date.txt
+      script:
+        - echo "SCRIPT"
