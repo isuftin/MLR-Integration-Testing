@@ -9,17 +9,14 @@ cache:
   directories:
     - $HOME/docker
 env:
-  global:
-    - DOCKER_COMPOSE_VERSION=1.23.2
-  matrix:
-    - TEST_NAME=waterauth
-    - TEST_NAME=gateway
-    - TEST_NAME=ddot
-    - TEST_NAME=legacycru
-    - TEST_NAME=notification
-    - TEST_NAME=transformer
-    - TEST_NAME=validator
-    - TEST_NAME=wscfileexporter
+  - TEST_NAME=waterauth
+  - TEST_NAME=gateway
+  - TEST_NAME=ddot
+  - TEST_NAME=legacycru
+  - TEST_NAME=notification
+  - TEST_NAME=transformer
+  - TEST_NAME=validator
+  - TEST_NAME=wscfileexporter
 
 stages:
   - precache
@@ -31,17 +28,17 @@ jobs:
   include:
     - stage: test
       before_install:
-        - echo "BEFORE INSTALL"
+        - echo "BEFORE INSTALL IN TEST"
       install:
-        - echo "INSTALL"
+        - echo "INSTALL IN TEST"
       script:
-        - echo "SCRIPT"
+        - echo "SCRIPT IN TEST"
     - stage: precache
       before_cache:
-        - echo "BEFORE CACHE"
+        - echo "BEFORE CACHE IN PRECACHE"
         - mkdir -p $HOME/docker
       install:
-        - echo "INSTALL"
+        - echo "INSTALL IN PRECACHE"
         - echo $(date) > $HOME/docker/date.txt
       script:
-        - echo "SCRIPT"
+        - echo "SCRIPT IN PRECACHE"
