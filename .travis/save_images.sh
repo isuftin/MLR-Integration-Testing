@@ -15,3 +15,6 @@ declare -a IMAGES=(
 for IMAGE in "${IMAGES[@]}"; do
   docker save "cidasdpdasartip.cr.usgs.gov:8447/${IMAGE}:latest" -o "$HOME/docker/${IMAGE////.}.tar"
 done
+
+docker-compose -f docker-compose-jmeter-servers.yml build
+docker save "jmeter-base:latest" -o "$HOME/docker/jmeter.tar"

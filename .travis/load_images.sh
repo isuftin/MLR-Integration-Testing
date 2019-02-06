@@ -15,3 +15,5 @@ declare -a IMAGES=(
 for IMAGE in "${IMAGES[@]}"; do
   docker load -i "$HOME/docker/${IMAGE////.}.tar" || true
 done
+
+docker load -i "$HOME/docker/jmeter.tar" || true
