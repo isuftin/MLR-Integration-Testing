@@ -2,7 +2,15 @@ sudo: required
 
 language: bash
 
+services:
+  - docker
+
+cache:
+  directories:
+    - $HOME/docker
 env:
+  global:
+    - DOCKER_COMPOSE_VERSION=1.23.2
   matrix:
     - TEST_NAME=waterauth
     - TEST_NAME=gateway
@@ -12,19 +20,10 @@ env:
     - TEST_NAME=transformer
     - TEST_NAME=validator
     - TEST_NAME=wscfileexporter
-  global:
-    - DOCKER_COMPOSE_VERSION=1.23.2
-
-services:
-  - docker
-
-cache:
-  directories:
-    - $HOME/docker
 
 stages:
   - precache
-  - test
+  - testz
 
 jobs:
   include:
@@ -34,7 +33,7 @@ jobs:
       install:
         - echo "INSTALL"
         - echo $(date) > $HOME/docker/date.txt
-    - stage: test
+    - stage: testz
       before_install:
         - echo "BEFORE INSTALL"
       install:
