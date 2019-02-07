@@ -3,8 +3,8 @@
 ls -al $HOME/docker/
 
 for img in $(docker image ls --format "{{ .Repository }}:{{ .Tag }}"); do
-  echo "Saving ${img} to ${HOME}/docker/${img}.tar"
-  docker save $img -o "$HOME/docker/$img.tar"
+  echo "Saving ${img} to ${HOME}/docker/${img//[\/:]/.}.tar"
+  docker save $img -o "$HOME/docker/${img//[\/:]/.}.tar"
 done
 
 if [ ! -f "$HOME/docker/jmeter.tar" ]; then
