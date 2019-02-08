@@ -151,8 +151,8 @@
           </JSONPathAssertion>
           <hashTree/>
           <SizeAssertion guiclass="SizeAssertionGui" testclass="SizeAssertion" testname="Size Assertion" enabled="true">
-            <stringProp name="Assertion.test_field">SizeAssertion.response_network_size</stringProp>
-            <stringProp name="SizeAssertion.size">826</stringProp>
+            <stringProp name="Assertion.test_field">SizeAssertion.response_data</stringProp>
+            <stringProp name="SizeAssertion.size">370</stringProp>
             <intProp name="SizeAssertion.operator">1</intProp>
           </SizeAssertion>
           <hashTree/>
@@ -258,7 +258,7 @@
           <hashTree/>
           <SizeAssertion guiclass="SizeAssertionGui" testclass="SizeAssertion" testname="Size Assertion" enabled="true">
             <stringProp name="Assertion.test_field">SizeAssertion.response_network_size</stringProp>
-            <stringProp name="SizeAssertion.size">1168</stringProp>
+            <stringProp name="SizeAssertion.size">1106</stringProp>
             <intProp name="SizeAssertion.operator">1</intProp>
           </SizeAssertion>
           <hashTree/>
@@ -355,7 +355,7 @@
           <hashTree/>
           <SizeAssertion guiclass="SizeAssertionGui" testclass="SizeAssertion" testname="Size Assertion" enabled="true">
             <stringProp name="Assertion.test_field">SizeAssertion.response_network_size</stringProp>
-            <stringProp name="SizeAssertion.size">649</stringProp>
+            <stringProp name="SizeAssertion.size">587</stringProp>
             <intProp name="SizeAssertion.operator">1</intProp>
           </SizeAssertion>
           <hashTree/>
@@ -452,12 +452,6 @@
               <boolProp name="ISREGEX">false</boolProp>
             </JSONPathAssertion>
             <hashTree/>
-            <SizeAssertion guiclass="SizeAssertionGui" testclass="SizeAssertion" testname="Size Assertion" enabled="true">
-              <stringProp name="Assertion.test_field">SizeAssertion.response_network_size</stringProp>
-              <stringProp name="SizeAssertion.size">2222</stringProp>
-              <intProp name="SizeAssertion.operator">1</intProp>
-            </SizeAssertion>
-            <hashTree/>
           </hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Perform Full Add Workflow - Duplicate Error" enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
@@ -528,12 +522,6 @@
               <boolProp name="INVERT">false</boolProp>
               <boolProp name="ISREGEX">false</boolProp>
             </JSONPathAssertion>
-            <hashTree/>
-            <SizeAssertion guiclass="SizeAssertionGui" testclass="SizeAssertion" testname="Size Assertion" enabled="true">
-              <stringProp name="Assertion.test_field">SizeAssertion.response_network_size</stringProp>
-              <stringProp name="SizeAssertion.size">2222</stringProp>
-              <intProp name="SizeAssertion.operator">1</intProp>
-            </SizeAssertion>
             <hashTree/>
           </hashTree>
         </hashTree>
@@ -629,7 +617,7 @@
           <hashTree/>
           <SizeAssertion guiclass="SizeAssertionGui" testclass="SizeAssertion" testname="Size Assertion" enabled="true">
             <stringProp name="Assertion.test_field">SizeAssertion.response_network_size</stringProp>
-            <stringProp name="SizeAssertion.size">650</stringProp>
+            <stringProp name="SizeAssertion.size">588</stringProp>
             <intProp name="SizeAssertion.operator">1</intProp>
           </SizeAssertion>
           <hashTree/>
@@ -733,12 +721,6 @@
             <boolProp name="ISREGEX">false</boolProp>
           </JSONPathAssertion>
           <hashTree/>
-          <SizeAssertion guiclass="SizeAssertionGui" testclass="SizeAssertion" testname="Size Assertion" enabled="true">
-            <stringProp name="Assertion.test_field">SizeAssertion.response_network_size</stringProp>
-            <stringProp name="SizeAssertion.size">2429</stringProp>
-            <intProp name="SizeAssertion.operator">1</intProp>
-          </SizeAssertion>
-          <hashTree/>
         </hashTree>
       </hashTree>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Perform Full Update Workflow" enabled="true">
@@ -832,7 +814,7 @@
           <hashTree/>
           <SizeAssertion guiclass="SizeAssertionGui" testclass="SizeAssertion" testname="Size Assertion" enabled="true">
             <stringProp name="Assertion.test_field">SizeAssertion.response_network_size</stringProp>
-            <stringProp name="SizeAssertion.size">671</stringProp>
+            <stringProp name="SizeAssertion.size">609</stringProp>
             <intProp name="SizeAssertion.operator">1</intProp>
           </SizeAssertion>
           <hashTree/>
@@ -938,7 +920,7 @@
           <hashTree/>
           <SizeAssertion guiclass="SizeAssertionGui" testclass="SizeAssertion" testname="Size Assertion" enabled="true">
             <stringProp name="Assertion.test_field">SizeAssertion.response_network_size</stringProp>
-            <stringProp name="SizeAssertion.size">1125</stringProp>
+            <stringProp name="SizeAssertion.size">1107</stringProp>
             <intProp name="SizeAssertion.operator">1</intProp>
           </SizeAssertion>
           <hashTree/>
