@@ -30,6 +30,7 @@ _test: &_test
   script:
     - ./launch_services.sh
     - ./launch_jmeter_servers.sh
+    - ./tests/integrations/$TRAVIS_JOB_NAME/test_plan.sh && ./read_results.sh $TRAVIS_JOB_NAME
 
 jobs:
   include:
@@ -47,25 +48,17 @@ jobs:
         - ./.travis/save_images.sh
     - <<: *_test
       name: waterauth
-      script: ./tests/integrations/waterauth/test_plan.sh && ./read_results.sh waterauth
     - <<: *_test
       name: gateway
-      script: ./tests/integrations/gateway/test_plan.sh && ./read_results.sh gateway
     - <<: *_test
       name: ddot
-      script: ./tests/integrations/ddot/test_plan.sh && ./read_results.sh ddot
     - <<: *_test
       name: legacycru
-      script: ./tests/integrations/legacycru/test_plan.sh && ./read_results.sh legacycru
     - <<: *_test
       name: notification
-      script: ./tests/integrations/notification/test_plan.sh && ./read_results.sh notification
     - <<: *_test
       name: transformer
-      script: ./tests/integrations/transformer/test_plan.sh && ./read_results.sh transformer
     - <<: *_test
       name: validator
-      script: ./tests/integrations/validator/test_plan.sh && ./read_results.sh validator
     - <<: *_test
       name: wscfileexporter
-      script: ./tests/integrations/wscfileexporter/test_plan.sh && ./read_results.sh wscfileexporter
