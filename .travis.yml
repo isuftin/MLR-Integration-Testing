@@ -32,6 +32,7 @@ install:
   - echo "INSTALL IN TEST"
 script:
   - echo "SCRIPT IN TEST"
+  - echo "PRECACHE JOB" > $HOME/docker/cache
 
 jobs:
   include:
@@ -39,6 +40,6 @@ jobs:
       before_install: true
       install:
         - echo "INSTALL IN PRECACHE"
-        - echo $(date) > $HOME/docker/date.txt
       script:
         - echo "SCRIPT IN PRECACHE"
+        - cat $HOME/docker/cache
