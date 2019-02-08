@@ -29,11 +29,11 @@ stages:
 _test: &_test
   stage: test
   before_install:
-    - echo "BEFORE INSTALL IN TEST ALIAS "
+    - echo "BEFORE INSTALL IN TEST ALIAS"
   install:
-    - echo "INSTALL IN TEST ALIAS "
+    - echo "INSTALL IN TEST ALIAS"
   script:
-    - echo "SCRIPT IN TEST ALIAS "
+    - echo "SCRIPT IN TEST ALIAS"
     - cat $HOME/docker/cache
 
 jobs:
