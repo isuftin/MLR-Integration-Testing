@@ -12,27 +12,29 @@ cache:
 env:
   global:
     - DOCKER_COMPOSE_VERSION=1.23.2
-  matrix:
-    - TEST_NAME=waterauth
-    - TEST_NAME=gateway
-    - TEST_NAME=ddot
-    - TEST_NAME=legacycru
-    - TEST_NAME=notification
-    - TEST_NAME=transformer
-    - TEST_NAME=validator
-    - TEST_NAME=wscfileexporter
+  # matrix:
+  #   - TEST_NAME=waterauth
+  #   - TEST_NAME=gateway
+  #   - TEST_NAME=ddot
+  #   - TEST_NAME=legacycru
+  #   - TEST_NAME=notification
+  #   - TEST_NAME=transformer
+  #   - TEST_NAME=validator
+  #   - TEST_NAME=wscfileexporter
 
 stages:
   - precache
   - test
 
-before_install:
-  - echo "BEFORE INSTALL IN TEST"
-install:
-  - echo "INSTALL IN TEST"
-script:
-  - echo "SCRIPT IN TEST"
-  - cat $HOME/docker/cache
+- &test
+  stage: test
+  before_install:
+    - echo "BEFORE INSTALL IN TEST"
+  install:
+    - echo "INSTALL IN TEST"
+  script:
+    - echo "SCRIPT IN TEST"
+    - cat $HOME/docker/cache
 
 jobs:
   include:
@@ -43,3 +45,9 @@ jobs:
       script:
         - echo "SCRIPT IN PRECACHE"
         - echo "PRECACHE JOB" > $HOME/docker/cache
+    - <<: *test
+      script: echo "TEST WATERAUTH"
+    - <<: *test
+      script: echo "TEST GATEWAY"
+    - <<: *test
+      script: echo "TEST DDOT"
