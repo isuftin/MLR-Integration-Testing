@@ -28,7 +28,6 @@ _test: &_test
   install:
     - ./.travis/load_images.sh;
   script:
-    - echo "Launching services"
     - ./launch_services.sh
     - ./launch_jmeter_servers.sh
 
