@@ -26,7 +26,15 @@ stages:
   - precache
   - test
 
-
+_test: &_test
+  stage: test
+  before_install:
+    - echo "BEFORE INSTALL IN TEST ALIAS"
+  install:
+    - echo "INSTALL IN TEST ALIAS"
+  script:
+    - echo "SCRIPT IN TEST ALIAS"
+    - cat $HOME/docker/cache
 
 jobs:
   include:
@@ -37,18 +45,9 @@ jobs:
       script:
         - echo "SCRIPT IN PRECACHE"
         - echo "PRECACHE JOB" > $HOME/docker/cache
-    - &test
-      stage: test
-      before_install:
-        - echo "BEFORE INSTALL IN TEST"
-      install:
-        - echo "INSTALL IN TEST"
-      script:
-        - echo "SCRIPT IN TEST"
-        - cat $HOME/docker/cache
-    - <<: *test
+    - <<: *_test
       script: echo "TEST WATERAUTH"
-    - <<: *test
+    - <<: *_test
       script: echo "TEST GATEWAY"
-    - <<: *test
+    - <<: *_test
       script: echo "TEST DDOT"
