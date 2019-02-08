@@ -11,6 +11,7 @@ services:
 
 cache:
   bundler: true
+  timeout: 1000
   directories:
     - $HOME/docker
 
