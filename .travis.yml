@@ -46,8 +46,11 @@ jobs:
         - echo "SCRIPT IN PRECACHE"
         - echo "PRECACHE JOB" > $HOME/docker/cache
     - <<: *_test
+      name: waterauth
       script: echo "TEST WATERAUTH"
     - <<: *_test
+      name: gateway
       script: echo "TEST GATEWAY"
     - <<: *_test
+      name: ddot
       script: echo "TEST DDOT"
