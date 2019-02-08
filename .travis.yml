@@ -26,15 +26,7 @@ stages:
   - precache
   - test
 
-- &test
-  stage: test
-  before_install:
-    - echo "BEFORE INSTALL IN TEST"
-  install:
-    - echo "INSTALL IN TEST"
-  script:
-    - echo "SCRIPT IN TEST"
-    - cat $HOME/docker/cache
+
 
 jobs:
   include:
@@ -45,6 +37,15 @@ jobs:
       script:
         - echo "SCRIPT IN PRECACHE"
         - echo "PRECACHE JOB" > $HOME/docker/cache
+    - &test
+      stage: test
+      before_install:
+        - echo "BEFORE INSTALL IN TEST"
+      install:
+        - echo "INSTALL IN TEST"
+      script:
+        - echo "SCRIPT IN TEST"
+        - cat $HOME/docker/cache
     - <<: *test
       script: echo "TEST WATERAUTH"
     - <<: *test
