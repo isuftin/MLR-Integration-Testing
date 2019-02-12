@@ -27,6 +27,7 @@ _test: &_test
     - sudo mv docker-compose /usr/local/bin
     - find . -type f -iname "*.sh" -exec chmod +x {} \;
   install:
+    - ./create_certificates.sh
     - ./.travis/load_images.sh;
   script:
     - ./launch_services.sh
