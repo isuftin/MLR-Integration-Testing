@@ -74,7 +74,7 @@ echo "Launching MLR services..."
     HEALTHY_SERVICES="$(get_healthy_services)"
     read -d '' -r -a HEALTHY_SERVICES_ARRAY <<< "$HEALTHY_SERVICES"
     echo "Services still not healthy: ${UNHEALTHY_SERVICES_ARRAY[*]}"
-
+    docker ps -a
   done
 
   echo "All services healthy: ${HEALTHY_SERVICES_ARRAY[*]}"
