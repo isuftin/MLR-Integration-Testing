@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 for img in $(docker image ls --format "{{ .Repository }}:{{ .Tag }}"); do
   echo "Saving ${img} to ${HOME}/docker/${img//[\/:]/.}.tar.gz"

@@ -3,15 +3,6 @@ sudo: required
 language: bash
 
 env:
-  matrix:
-    - TEST_NAME=waterauth
-    - TEST_NAME=gateway
-    - TEST_NAME=ddot
-    - TEST_NAME=legacycru
-    - TEST_NAME=notification
-    - TEST_NAME=transformer
-    - TEST_NAME=validator
-    - TEST_NAME=wscfileexporter
   global:
     - DOCKER_COMPOSE_VERSION=1.23.2
 
@@ -20,6 +11,7 @@ services:
 
 cache:
   bundler: true
+  timeout: 1000
   directories:
     - $HOME/docker
 
@@ -27,10 +19,25 @@ stages:
   - precache
   - test
 
+_test: &_test
+  stage: test
+  before_install:
+    - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+    - find . -type f -iname "*.sh" -exec chmod +x {} \;
+    - sudo mv docker-compose /usr/local/bin
+  install:
+    - ./create_certificates.sh
+    - ./.travis/load_images.sh;
+  script:
+    - ./launch_services.sh
+    - ./launch_jmeter_servers.sh
+    - ./tests/integrations/$TRAVIS_JOB_NAME/test_plan.sh && ./read_results.sh $TRAVIS_JOB_NAME
+
 jobs:
   include:
     - stage: precache
-      before_install: true
+      before_install:
+        - find . -type f -iname "*.sh" -exec chmod +x {} \;
       install:
         - mkdir -p $HOME/docker
         - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
@@ -40,17 +47,19 @@ jobs:
         - ./.travis/load_images.sh
         - ./pull-containers.sh
         - ./.travis/save_images.sh
-
-before_install:
-  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
-  - find . -name "*.sh" -exec chmod +x {} \;
-  - sudo mv docker-compose /usr/local/bin
-install:
-  - ./.travis/load_images.sh
-script:
-  - ./launch_services.sh
-  - ./launch_jmeter_servers.sh
-  - echo "Testing ${TEST_NAME}"
-  - ./tests/integrations/${TEST_NAME}/test_plan.sh
-  - echo "Reading results for ${TEST_NAME}"
-  - ./read_results.sh $TEST_NAME
+    - <<: *_test
+      name: waterauth
+    - <<: *_test
+      name: gateway
+    - <<: *_test
+      name: ddot
+    - <<: *_test
+      name: legacycru
+    - <<: *_test
+      name: notification
+    - <<: *_test
+      name: transformer
+    - <<: *_test
+      name: validator
+    - <<: *_test
+      name: wscfileexporter
