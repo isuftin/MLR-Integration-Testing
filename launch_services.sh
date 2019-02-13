@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 
 # Useful for environments where the Docker engine is not running on the host
 # (like Docker Machine). If you are running Docker natively, don't worry about
