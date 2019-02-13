@@ -10,7 +10,6 @@ services:
   - docker
 
 cache:
-  bundler: true
   timeout: 1000
   directories:
     - $HOME/docker
@@ -24,14 +23,15 @@ _test: &_test
   before_install:
     - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
     - find . -type f -iname "*.sh" -exec chmod +x {} \;
-    - sudo mv docker-compose /usr/local/bin
+    - chmod +x docker-compose && sudo mv docker-compose /usr/local/bin
   install:
     - ./create_certificates.sh
     - ./.travis/load_images.sh;
   script:
     - ./launch_services.sh
     - ./launch_jmeter_servers.sh
-    - ./tests/integrations/$TRAVIS_JOB_NAME/test_plan.sh && ./read_results.sh $TRAVIS_JOB_NAME
+    - ./tests/integrations/$TRAVIS_JOB_NAME/test_plan.sh
+    - ./read_results.sh $TRAVIS_JOB_NAME
 
 jobs:
   include:
@@ -42,7 +42,7 @@ jobs:
         - mkdir -p $HOME/docker
         - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
         - find . -name "*.sh" -exec chmod +x {} \;
-        - sudo mv docker-compose /usr/local/bin
+        - chmod +x docker-compose && sudo mv docker-compose /usr/local/bin
       script:
         - ./.travis/load_images.sh
         - ./pull-containers.sh
