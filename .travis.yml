@@ -34,23 +34,20 @@ jobs:
       install:
         - mkdir -p $HOME/docker
         - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
-        - chmod +x docker-compose
+        - find . -name "*.sh" -exec chmod +x {} \;
         - sudo mv docker-compose /usr/local/bin
       script:
-        - chmod +x ./.travis/load_images.sh && ./.travis/load_images.sh
-        - chmod +x ./pull-containers.sh && ./pull-containers.sh
-        - chmod +x ./.travis/save_images.sh && ./.travis/save_images.sh
+        - ./.travis/load_images.sh
+        - ./pull-containers.sh
+        - ./.travis/save_images.sh
 
 before_install:
   - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
-  - chmod +x docker-compose
+  - find . -name "*.sh" -exec chmod +x {} \;
   - sudo mv docker-compose /usr/local/bin
 install:
-  - chmod +x *.sh
-  - chmod +x ./.travis/load_images.sh && ./.travis/load_images.sh
-  - chmod +x "./tests/integrations/${TEST_NAME}/test_plan.sh";
+  - ./.travis/load_images.sh
 script:
-  - echo "Launching services"
   - ./launch_services.sh
   - ./launch_jmeter_servers.sh
   - echo "Testing ${TEST_NAME}"
